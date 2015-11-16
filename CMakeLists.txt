@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.0.2 )
+cmake_minimum_required( VERSION 2.8 )
 
 project( ci-test LANGUAGES CXX )
 
@@ -11,3 +11,4 @@ macro( project_set_cxx11 target )
 endmacro()
 
 add_executable( ci-test ci-test.cpp )
+project_set_cxx11( ci-test )

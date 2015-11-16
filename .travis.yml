@@ -1,16 +1,19 @@
 language: cpp
-compiler:
-- g++
-- clang
+
 os:
-- linux
-- osx
+ - linux
+ - osx
+
+compiler:
+ - g++
+ - clang
+
+env:
+ - CONFIG=Release
+ - CONFIG=Debug
 
 script:
-- mkdir build && cd build && cmake .. && make
-
-addons:
- apt:
-  packages:
-  - cmake
-  - cmake-data
+ - mkdir build
+ - cd build
+ - cmake -DCMAKE_BUILD_TYPE=$CONFIG ..
+ - make
