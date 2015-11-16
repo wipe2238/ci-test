@@ -2,6 +2,8 @@ environment:
  matrix:
   - platform: x86
     VisualStudioVersion: 10
+  - platform: x86
+    VisualStudioVersion: 11
   - playform: x86
     VisualStudioVersion: 12
   - platform: x64
@@ -14,9 +16,11 @@ configuration:
  - Release
 
 before_build:
-- cd c:\projects\ci-test\
-- cd build
-- cmake -DCMAKE_BUILD_TYPE=%configuration% ..
+ - cd c:\projects\ci-test\
+ - cd build
+ - set VSUFFIX=
+ - if "%platform%" == "x64" set VSUFFIX=" Win64"
+ - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion%%VSUFFIX%" ..
 
 build:
  project: c:\projects\ci-test\build\ci-test.sln
