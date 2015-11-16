@@ -5,7 +5,6 @@ environment:
     
 before_build:
 - cd c:\projects\ci-test\
-- md build
 - cd build
 - cmake ..
 
