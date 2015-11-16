@@ -11,5 +11,7 @@ macro( project_set_cxx11 target )
 	endif()
 endmacro()
 
+message( STATUS "Build type : ${CMAKE_BUILD_TYPE}" )
+
 add_executable( ci-test ci-test.cpp )
 project_set_cxx11( ci-test )
