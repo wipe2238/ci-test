@@ -7,6 +7,9 @@ before_build:
 - cd c:\projects\ci-test\
 - cd build
 - cmake ..
+- dir
+- cd ..
+- dir
 
 build:
  project: ci-test.sln
