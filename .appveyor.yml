@@ -1,0 +1,11 @@
+platform:
+- Win32
+- x64
+
+before_build:
+- md build
+- cd build
+- cmake ..
+
+build:
+ project: ci-test.sln
