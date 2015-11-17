@@ -62,9 +62,9 @@ matrix:
        - g++-4.8
  ##
  allow_failures:
-  - env: BUILD=Debug   COMPILER=g++-4.9
+  - env: BUILD=Debug COMPILER=g++-4.9
   - env: BUILD=Release COMPILER=g++-4.9
-  - env: BUILD=Debug   COMPILER=g++-4.8
+  - env: BUILD=Debug COMPILER=g++-4.8
   - env: BUILD=Release COMPILER=g++-4.8
 
 before_script:
