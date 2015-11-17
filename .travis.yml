@@ -3,7 +3,7 @@ language: cpp
 matrix:
  fast_finish: true
  include:
-  ## linux 5.x
+  ## linux g++ 5.x
   - os: linux
     compiler: g++
     env: BUILD=Debug COMPILER=g++-5
@@ -22,7 +22,7 @@ matrix:
        - ubuntu-toolchain-r-test
       packages:
        - g++-5
-  ## linux 4.9
+  ## linux g++ 4.9
   - os: linux
     compiler: g++
     env: BUILD=Debug COMPILER=g++-4.9
@@ -41,7 +41,7 @@ matrix:
        - ubuntu-toolchain-r-test
       packages:
        - g++-4.9
-  ## linux 4.8
+  ## linux g++ 4.8
   - os: linux
     compiler: g++
     env: BUILD=Debug COMPILER=g++-4.8
@@ -60,10 +60,11 @@ matrix:
        - ubuntu-toolchain-r-test
       packages:
        - g++-4.8
+ ##
  allow_failures:
-  - env: BUILD=Debug COMPILER=g++-4.9
+  - env: BUILD=Debug   COMPILER=g++-4.9
   - env: BUILD=Release COMPILER=g++-4.9
-  - env: BUILD=Debug COMPILER=g++-4.8
+  - env: BUILD=Debug   COMPILER=g++-4.8
   - env: BUILD=Release COMPILER=g++-4.8
 
 before_script:
