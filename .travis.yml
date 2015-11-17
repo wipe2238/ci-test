@@ -8,8 +8,9 @@ compiler:
 
 addons:
  apt:
+  sources:
+   - ubuntu-toolchain-r-test
   packages:
-   - gcc-5
    - g++-5
 
 env:
@@ -22,7 +23,6 @@ before_script:
     sh /tmp/cmake.sh --prefix=$HOME --exclude-subdir ;
     export PATH=$HOME/bin:$PATH ;
    fi
- - if [[ "$CC" == "gcc" ]];  then export CC="gcc-5" ; fi
  - if [[ "$CXX" == "g++" ]]; then export CXX="g++-5" ; fi
 
 script:
