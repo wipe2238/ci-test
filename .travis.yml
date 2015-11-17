@@ -1,7 +1,6 @@
 language: cpp
 
 matrix:
- fast_finish: true
  include:
   ## linux g++ 5.x
   - os: linux

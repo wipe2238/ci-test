@@ -16,7 +16,6 @@ configuration:
  - Release
 
 matrix:
- fast_finish: true
  allow_failures:
   - VisualStudioVersion: 12
   - VisualStudioVersion: 11
