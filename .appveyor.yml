@@ -3,13 +3,13 @@ version: "{build}"
 environment:
  matrix:
   - platform: Win32
-    VisualStudioVersion: 10
-  - platform: Win32
-    VisualStudioVersion: 11
+    VisualStudioVersion: 14
   - platform: Win32
     VisualStudioVersion: 12
   - platform: Win32
-    VisualStudioVersion: 14
+    VisualStudioVersion: 11
+  - platform: Win32
+    VisualStudioVersion: 10
 
 configuration:
  - Debug
@@ -18,17 +18,17 @@ configuration:
 matrix:
  fast_finish: true
  allow_failures:
-  - VisualStudioVersion: 10
-  - VisualStudioVersion: 11
   - VisualStudioVersion: 12
+  - VisualStudioVersion: 11
+  - VisualStudioVersion: 10
 
 before_build:
  - cd c:\projects\ci-test\
  - cd build
- - if "%VisualStudioVersion%" == "10" set VisualStudioYear="2010"
- - if "%VisualStudioVersion%" == "11" set VisualStudioYear="2012"
- - if "%VisualStudioVersion%" == "12" set VisualStudioYear="2013"
  - if "%VisualStudioVersion%" == "14" set VisualStudioYear="2015"
+ - if "%VisualStudioVersion%" == "12" set VisualStudioYear="2013"
+ - if "%VisualStudioVersion%" == "11" set VisualStudioYear="2012"
+ - if "%VisualStudioVersion%" == "10" set VisualStudioYear="2010"
  - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VisualStudioYear%" ..
 
 build:
