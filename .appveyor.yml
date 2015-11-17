@@ -9,6 +9,11 @@ environment:
   - playform: Win32
     VisualStudioVersion: 12
 
+matrix:
+ allow_failures:
+  - VisualStudioVersion: 10
+  - VisualStudioVersion: 11
+
 configuration:
  - Debug
  - Release
