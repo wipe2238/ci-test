@@ -9,8 +9,8 @@ compiler:
 addons:
  apt:
   packages:
-   - gcc-4.8
-   - g++-4.8
+   - gcc-5
+   - g++-5
 
 env:
  - BUILD=Debug
@@ -22,6 +22,7 @@ before_script:
     sh /tmp/cmake.sh --prefix=$HOME --exclude-subdir ;
     export PATH=$HOME/bin:$PATH ;
    fi
+ - if [[ "$CXX" == "g++" ]]; then export CXX="g++-5" CC="gcc-5"; fi
 
 script:
  - cmake --version
