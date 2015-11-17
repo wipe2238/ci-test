@@ -8,12 +8,6 @@ environment:
     VisualStudioVersion: 11
   - playform: Win32
     VisualStudioVersion: 12
-  - platform: x64
-    VisualStudioVersion: 10
-  - platform: x64
-    VisualStudioVersion: 11
-  - platform: x64
-    VisualStudioVersion: 12
 
 configuration:
  - Debug

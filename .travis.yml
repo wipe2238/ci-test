@@ -22,7 +22,8 @@ before_script:
     sh /tmp/cmake.sh --prefix=$HOME --exclude-subdir ;
     export PATH=$HOME/bin:$PATH ;
    fi
- - if [[ "$CXX" == "g++" ]]; then export CXX="g++-5" CC="gcc-5"; fi
+ - if [[ "$CC" == "gcc" ]];  then export CC="gcc-5" ; fi
+ - if [[ "$CXX" == "g++" ]]; then export CXX="g++-5" ; fi
 
 script:
  - cmake --version
