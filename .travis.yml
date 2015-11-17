@@ -6,6 +6,12 @@ os:
 compiler:
  - g++
 
+addons:
+ apt:
+  packages:
+   - gcc-4.8
+   - g++-4.8
+
 env:
  - BUILD=Debug
  - BUILD=Release
@@ -19,6 +25,7 @@ before_script:
 
 script:
  - cmake --version
+ - g++ --version
  - cd build
  - cmake -DCMAKE_BUILD_TYPE=$BUILD ..
  - make
