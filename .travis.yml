@@ -52,13 +52,18 @@ matrix:
        - g++-5
   - os: linux
     compiler: g++
-    env: BUILD=Release COMPILER=g++5
+    env: BUILD=Release COMPILER=g++-5
     addons:
      apt:
       sources:
        - ubuntu-toolchain-r-test
       packages:
        - g++-5
+ allow_failures:
+  - env: BUILD=Debug COMPILER=g++-4.8
+  - env: BUILD=Release COMPILER=g++-4.8
+  - env: BUILD=Debug COMPILER=g++-4.9
+  - env: BUILD=Release COMPILER=g++-4.9
 
 before_script:
  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
@@ -68,7 +73,6 @@ before_script:
    fi
 
 script:
- - cmake --version
  - cd build
  - cmake -DCMAKE_BUILD_TYPE=$BUILD -DCMAKE_CXX_COMPILER=$COMPILER ..
  - make
