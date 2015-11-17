@@ -1,13 +1,17 @@
+version: {build}
+
 environment:
  matrix:
-  - platform: x86
+  - platform: Win32
     VisualStudioVersion: 10
-  - platform: x86
+  - platform: Win32
     VisualStudioVersion: 11
-  - playform: x86
+  - playform: Win32
     VisualStudioVersion: 12
   - platform: x64
     VisualStudioVersion: 10
+  - platform: x64
+    VisualStudioVersion: 11
   - platform: x64
     VisualStudioVersion: 12
 
@@ -18,9 +22,10 @@ configuration:
 before_build:
  - cd c:\projects\ci-test\
  - cd build
- - set VSUFFIX=
- - if "%platform%" == "x64" set VSUFFIX=" Win64"
- - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion%%VSUFFIX%" ..
+ - if "%VisualStudioVersion%" == "10" set VisualStudioYear="2010"
+ - if "%VisualStudioVersion%" == "11" set VisualStudioYear="2012"
+ - if "%VisualStudioVersion%" == "12" set VisualStudioYear="2013"
+ - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VisualStudioYear%" ..
 
 build:
  project: c:\projects\ci-test\build\ci-test.sln
