@@ -2,6 +2,45 @@ language: cpp
 
 matrix:
  include:
+ ## linux 4.8
+  - os: linux
+    compiler: g++
+    env: BUILD=Debug COMPILER=g++-4.8
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-4.8
+  - os: linux
+    compiler: g++
+    env: BUILD=Release COMPILER=g++-4.8
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-4.8
+  ## linux 4.9
+  - os: linux
+    compiler: g++
+    env: BUILD=Debug COMPILER=g++-4.9
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-4.9
+  - os: linux
+    compiler: g++
+    env: BUILD=Release COMPILER=g++-4.9
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-4.9
+  ## linux 5.x
   - os: linux
     compiler: g++
     env: BUILD=Debug COMPILER=g++-5
@@ -11,7 +50,6 @@ matrix:
        - ubuntu-toolchain-r-test
       packages:
        - g++-5
-       - cmake
   - os: linux
     compiler: g++
     env: BUILD=Release COMPILER=g++5
@@ -21,14 +59,13 @@ matrix:
        - ubuntu-toolchain-r-test
       packages:
        - g++-5
-       - cmake
 
-#before_script:
-# - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-#    wget --no-check-certificate http://www.cmake.org/files/v3.1/cmake-3.1.2-Linux-x86_64.sh -O /tmp/cmake.sh ;
-#    sh /tmp/cmake.sh --prefix=$HOME --exclude-subdir ;
-#    export PATH=$HOME/bin:$PATH ;
-#   fi
+before_script:
+ - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+    wget --no-check-certificate http://www.cmake.org/files/v3.1/cmake-3.1.2-Linux-x86_64.sh -O /tmp/cmake.sh ;
+    sh /tmp/cmake.sh --prefix=$HOME --exclude-subdir ;
+    export PATH=$HOME/bin:$PATH ;
+   fi
 
 script:
  - cmake --version
