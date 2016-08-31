@@ -32,3 +32,11 @@ before_build:
 
 build:
  project: c:\projects\ci-test\build\ci-test.sln
+
+deploy:
+ provider: Github
+ draft: false
+ preprelease: false
+ on:
+  branch: aster
+  appveyor_repo_tag: true
