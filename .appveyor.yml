@@ -38,5 +38,5 @@ deploy:
  draft: false
  preprelease: false
  on:
-  branch: aster
+  branch: master
   appveyor_repo_tag: true
