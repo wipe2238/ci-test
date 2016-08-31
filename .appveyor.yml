@@ -22,8 +22,7 @@ matrix:
   - VisualStudioVersion: 10
 
 before_build:
- - cd c:\projects\ci-test\
- - cd build
+ - cd c:\projects\ci-test\build
  - if "%VisualStudioVersion%" == "14" set VisualStudioYear="2015"
  - if "%VisualStudioVersion%" == "12" set VisualStudioYear="2013"
  - if "%VisualStudioVersion%" == "11" set VisualStudioYear="2012"
@@ -38,10 +37,11 @@ deploy:
  provider: GitHub
  auth_token:
   secure: PfvQTUZqXQ/FUyVSUmbfjuatnoab1/3YLtZ+4lhYC1vMItMb4gYMwU5QenOJJi+D
+ tag: $(appveyor_repo_tag_name)
  release: '$(appveyor_project_name) v$(appveyor_repo_tag_name)'
  description: 'Description text'
  draft: false
- prelease: true
+ prerelease: true
  on:
   branch: master
   appveyor_repo_tag: true
@@ -49,9 +49,8 @@ deploy:
   VisualStudioVersion: 14
 
 after_build:
- - del %APPVEYOR_BUILD_FORDER%\CompilerIdCXX.exe
- - 7z a $(appveyor_project_name)-$(appveyor_repo_tag_name)-$(platform).zip %APPVEYOR_BUILD_FORDER%\*.exe
+ - del c:\projects\ci-test\build\CompilerIdCXX.exe
+ - 7z a %APPVERYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%PLATFORM%.zip c:\projects\ci-test\build\*.exe
 
 artifacts:
  - path: $(appveyor_project_name)-$(appveyor_repo_tag_name)-$(platform).zip
-   name: $(appveyor_project_name)-$(appveyor_repo_tag_name)-$(platform)
