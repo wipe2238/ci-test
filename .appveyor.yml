@@ -34,7 +34,7 @@ build:
  project: c:\projects\ci-test\build\ci-test.sln
 
 deploy:
- provider: Github
+ provider: GitHub
  draft: false
  preprelease: false
  on:
