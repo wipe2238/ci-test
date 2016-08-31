@@ -50,7 +50,7 @@ deploy:
 
 after_build:
  - del c:\projects\ci-test\build\CompilerIdCXX.exe
- - 7z a %APPVERYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%PLATFORM%.zip c:\projects\ci-test\build\*.exe
+ - 7z a %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%PLATFORM%.zip c:\projects\ci-test\build\*.exe
 
 artifacts:
  - path: $(appveyor_project_name)-$(appveyor_repo_tag_name)-$(platform).zip
