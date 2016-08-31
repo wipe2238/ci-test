@@ -48,6 +48,6 @@ deploy:
   VisualStudioVersion: 14
 
 artifacts:
- - path: **\*.exe
+ - path: '**\*.exe'
    name: $(appveyor_project_name)-$(appveyor_repo_tag_name)-$(platform)
  
