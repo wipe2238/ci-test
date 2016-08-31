@@ -33,6 +33,7 @@ before_build:
 build:
  project: c:\projects\ci-test\build\ci-test.sln
 
+
 deploy:
  provider: GitHub
  auth_token:
@@ -40,14 +41,17 @@ deploy:
  release: '$(appveyor_project_name) v$(appveyor_repo_tag_name)'
  description: 'Description text'
  draft: false
- preprelease: true
+ prelease: true
  on:
   branch: master
   appveyor_repo_tag: true
   configuration: Release
   VisualStudioVersion: 14
 
+after_build:
+ - del %APPVEYOR_BUILD_FORDER%\CompilerIdCXX.exe
+ - 7z a $(appveyor_project_name)-$(appveyor_repo_tag_name)-$(platform).zip %APPVEYOR_BUILD_FORDER%\*.exe
+
 artifacts:
- - path: '**\*.exe'
+ - path: $(appveyor_project_name)-$(appveyor_repo_tag_name)-$(platform).zip
    name: $(appveyor_project_name)-$(appveyor_repo_tag_name)-$(platform)
- 
