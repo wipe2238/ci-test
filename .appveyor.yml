@@ -45,3 +45,9 @@ deploy:
   branch: master
   appveyor_repo_tag: true
   configuration: Release
+  VisualStudioVersion: 14
+
+artifacts:
+ - path: **\*.exe
+   name: $(appveyor_project_name)-$(appveyor_repo_tag_name)-$(platform)
+ 
