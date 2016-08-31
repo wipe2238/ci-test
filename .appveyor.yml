@@ -37,10 +37,11 @@ deploy:
  provider: GitHub
  auth_token:
   secure: PfvQTUZqXQ/FUyVSUmbfjuatnoab1/3YLtZ+4lhYC1vMItMb4gYMwU5QenOJJi+D
+ release: '$(appveyor_project_name) v$(appveyor_repo_tag_name)'
  description: 'Description text'
  draft: false
- preprelease: false
+ preprelease: true
  on:
   branch: master
   appveyor_repo_tag: true
-
+  configuration: Release
