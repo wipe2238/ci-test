@@ -37,6 +37,7 @@ deploy:
  provider: GitHub
  auth_token:
   secure: PfvQTUZqXQ/FUyVSUmbfjuatnoab1/3YLtZ+4lhYC1vMItMb4gYMwU5QenOJJi+D
+ description: 'Description text'
  draft: false
  preprelease: false
  on:
