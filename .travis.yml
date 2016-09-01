@@ -2,10 +2,30 @@ language: cpp
 
 matrix:
  include:
-  ## linux g++ 5.x
+  ## linux g++ 5.x x32
   - os: linux
     compiler: g++
-    env: BUILD=Debug COMPILER=g++-5
+    env: BUILD=Debug COMPILER=g++-5 ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-5:i386
+  - os: linux
+    compiler: g++
+    env: BUILD=Release COMPILER=g++-5 ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-5:i386
+       - p7zip-full
+  ## linux g++ 5.x x64
+  - os: linux
+    compiler: g++
+    env: BUILD=Debug COMPILER=g++-5 ARCH=64
     addons:
      apt:
       sources:
@@ -14,7 +34,7 @@ matrix:
        - g++-5
   - os: linux
     compiler: g++
-    env: BUILD=Release COMPILER=g++-5
+    env: BUILD=Release COMPILER=g++-5 ARCH=64
     addons:
      apt:
       sources:
@@ -25,7 +45,7 @@ matrix:
   ## linux g++ 4.9
   - os: linux
     compiler: g++
-    env: BUILD=Debug COMPILER=g++-4.9
+    env: BUILD=Debug COMPILER=g++-4.9 ARCH=64
     addons:
      apt:
       sources:
@@ -34,7 +54,7 @@ matrix:
        - g++-4.9
   - os: linux
     compiler: g++
-    env: BUILD=Release COMPILER=g++-4.9
+    env: BUILD=Release COMPILER=g++-4.9 ARCH=64
     addons:
      apt:
       sources:
@@ -44,7 +64,7 @@ matrix:
   ## linux g++ 4.8
   - os: linux
     compiler: g++
-    env: BUILD=Debug COMPILER=g++-4.8
+    env: BUILD=Debug COMPILER=g++-4.8 ARCH=64
     addons:
      apt:
       sources:
@@ -53,7 +73,7 @@ matrix:
        - g++-4.8
   - os: linux
     compiler: g++
-    env: BUILD=Release COMPILER=g++-4.8
+    env: BUILD=Release COMPILER=g++-4.8 ARCH=64
     addons:
      apt:
       sources:
@@ -69,7 +89,14 @@ matrix:
 
 before_script:
  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    wget --no-check-certificate http://cmake.org/files/v3.4/cmake-3.4.2-Linux-x86_64.sh -O /tmp/cmake.sh ;
+    cmake_ver=3.4.2
+    cmake_arch=
+    if [[ "${ARCH}" == "32" ]]; then
+     cmake_arch=i386
+    elif [[ "${ARCH}" == "64" ]]; then
+     cmake_arch=x86_64
+    fi
+    wget --no-check-certificate http://cmake.org/files/v${cmake_ver%.*}/cmake-${cmake_ver}-Linux-${cmake_arch}.sh -O /tmp/cmake.sh ;
     sh /tmp/cmake.sh --prefix=$HOME --exclude-subdir ;
     export PATH=$HOME/bin:$PATH ;
    fi
@@ -78,14 +105,15 @@ script:
  - cd $TRAVIS_BUILD_DIR/build
  - cmake -DCMAKE_BUILD_TYPE=$BUILD -DCMAKE_CXX_COMPILER=$COMPILER ..
  - make
+ - file for_auto
 
 
 deploy:
  provider: releases
  api_key:
   secure: "BXB3KTknuom4G+uLBxEDi+14uMD5cDbuPZzGUqBvQc6Pf/RiVGMj/AN3AFxJuDc9U7QZMRSA2KqkMCjWzCESK3Rb8sgSJLXoa2YvGDfJCRQ7rQJf7xXxa/PSOtpe0pdH7vUvCKnMdS0Muq9nEcxnm/fa0W63s/xdY7NmVN/a3VgRyPt/PVMjnPN3/p3DLArSpHZ3dyZxC1O35AD2xAzUz1bJZWpQlj8ElwbE923I7spWC9/jvr0yZKQqJpyBuyzOnVyHoQyw5oUn0/x7yLTwgcTPY/T35to3xw8JXixyl1qB1WScDh5mYn6XWULWr5bTLhepD3AUJCuD32ki4wJo1nZZe+rN17Ojw338O1eKZRowAMP1uo7RZTOPLglDlohKm3JWXyzFB+8pxmnhWpfQPuzty+sx3RdIDRZznvDZC2lSVvMpKi6T7ZKRTaxfUV/QyHg7c1Bwgua5+1R14wwb7gddZrUZdMjwtp4/MmP+9r2UF3BJApVzXiGef4GPK3vsYNc+FzJitObvsVr1KGqeLGlmQ0rS3zHl3i2PDOoMm/gcOpnOSOFGisBZkLqjUPhcKB1JUE2rn7zmYXx8l3Pi3O7p4VrZfmQPFWRRpznxHzuZJ9MHomFVP9lAJAOTdgZdzgtqlsG7CDTJkRrQW6Pl2sr/NQwl/ZiZOONh1oLm0hk="
- file: $HOME/ci-test-$TRAVIS_TAG-Linux64.zip
- name: ci-test v$TRAVIS_TAG
+ file: ${HOME}/ci-test-${TRAVIS_TAG}-Linux${ARCH}.zip
+ name: ci-test v{$TRAVIS_TAG}
  body: Automated build
  draft: false
  prerelease: true
@@ -97,4 +125,4 @@ deploy:
 
 before_deploy:
  - cd $TRAVIS_BUILD_DIR/build
- - 7z a $HOME/ci-test-$TRAVIS_TAG-Linux64.zip class_initializer for_auto for_lambda vector_initializer
+ - 7z a ${HOME}/ci-test-${TRAVIS_TAG}-Linux${ARCH}.zip class_initializer for_auto for_lambda vector_initializer
