@@ -39,7 +39,7 @@ build:
 deploy:
  provider: GitHub
  auth_token:
-  secure: PfvQTUZqXQ/FUyVSUmbfjuatnoab1/3YLtZ+4lhYC1vMItMb4gYMwU5QenOJJi+D
+  secure: 7kFFbQTFg2HbkTl0I7dwI/LZe5yiIJPm/99gWJKSepfzD2q7BLr2jUavaKeBgiiw
  tag: $(appveyor_repo_tag_name)
  release: '$(appveyor_project_name) v$(appveyor_repo_tag_name)'
  description: 'Automated build'
