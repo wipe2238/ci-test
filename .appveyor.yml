@@ -30,6 +30,7 @@ before_build:
  - if "%platform%" == "Win32" set VisualStudioArch=
  - if "%platform%" == "Win64" set VisualStudioArch=" Win64"
  - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VisualStudioYear%%VisualStudioArch%" ..
+ - type ci-test.sln
 
 build:
  project: c:\projects\ci-test\build\ci-test.sln
