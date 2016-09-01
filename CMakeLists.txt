@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.1.2 )
+cmake_minimum_required( VERSION 3.4.2 )
 
 project( ci-test LANGUAGES CXX )
 
