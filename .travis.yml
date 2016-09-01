@@ -92,4 +92,4 @@ deploy:
 
 before_deploy:
  - cd $TRAVIS_BUILD_DIR/build
- - 7z a $HOME/ci-test-$TRAVIS_TAG-Linux64.tar.gz class_initializer for_auto for_lambda vector_initializer
+ - 7z a $HOME/ci-test-$TRAVIS_TAG-Linux64.zip class_initializer for_auto for_lambda vector_initializer
