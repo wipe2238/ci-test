@@ -48,7 +48,7 @@ deploy:
   configuration: Release
   VisualStudioVersion: 14
 
-after_build:
+before_deploy
  - del c:\projects\ci-test\build\%CONFIGURATION%\CompilerIdCXX.exe
  - 7z a %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%PLATFORM%.zip c:\projects\ci-test\build\%CONFIGURATION%\*.exe
  - appveyor PushArtifact %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%PLATFORM%.zip
