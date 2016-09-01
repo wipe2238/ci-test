@@ -84,7 +84,7 @@ deploy:
  provider: releases
  api_key:
   secure: "BXB3KTknuom4G+uLBxEDi+14uMD5cDbuPZzGUqBvQc6Pf/RiVGMj/AN3AFxJuDc9U7QZMRSA2KqkMCjWzCESK3Rb8sgSJLXoa2YvGDfJCRQ7rQJf7xXxa/PSOtpe0pdH7vUvCKnMdS0Muq9nEcxnm/fa0W63s/xdY7NmVN/a3VgRyPt/PVMjnPN3/p3DLArSpHZ3dyZxC1O35AD2xAzUz1bJZWpQlj8ElwbE923I7spWC9/jvr0yZKQqJpyBuyzOnVyHoQyw5oUn0/x7yLTwgcTPY/T35to3xw8JXixyl1qB1WScDh5mYn6XWULWr5bTLhepD3AUJCuD32ki4wJo1nZZe+rN17Ojw338O1eKZRowAMP1uo7RZTOPLglDlohKm3JWXyzFB+8pxmnhWpfQPuzty+sx3RdIDRZznvDZC2lSVvMpKi6T7ZKRTaxfUV/QyHg7c1Bwgua5+1R14wwb7gddZrUZdMjwtp4/MmP+9r2UF3BJApVzXiGef4GPK3vsYNc+FzJitObvsVr1KGqeLGlmQ0rS3zHl3i2PDOoMm/gcOpnOSOFGisBZkLqjUPhcKB1JUE2rn7zmYXx8l3Pi3O7p4VrZfmQPFWRRpznxHzuZJ9MHomFVP9lAJAOTdgZdzgtqlsG7CDTJkRrQW6Pl2sr/NQwl/ZiZOONh1oLm0hk="
- file: $HOME/ci-test-$TRAVIS_TAG-Linux64.tar.gz
+ file: $HOME/ci-test-$TRAVIS_TAG-Linux64.zip
  skip_cleanup: true
  on:
   branch: master
