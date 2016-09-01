@@ -2,14 +2,14 @@ version: "{build}"
 
 environment:
  matrix:
-  - platform: Win32
-    VisualStudioVersion: 14
-  - platform: Win32
-    VisualStudioVersion: 12
-  - platform: Win32
-    VisualStudioVersion: 11
-  - platform: Win32
-    VisualStudioVersion: 10
+  - VisualStudioVersion: 14
+  - VisualStudioVersion: 12
+  - VisualStudioVersion: 11
+  - VisualStudioVersion: 10
+
+platform:
+ - x86
+ - x64
 
 configuration:
  - Debug
