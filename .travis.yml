@@ -75,7 +75,7 @@ before_script:
    fi
 
 script:
- - cd build
+ - cd $TRAVIS_BUILD_DIR/build
  - cmake -DCMAKE_BUILD_TYPE=$BUILD -DCMAKE_CXX_COMPILER=$COMPILER ..
  - make
 
@@ -91,7 +91,5 @@ deploy:
   condition: $BUILD == Release && $COMPILER == g++-5
 
 before_deploy:
- - 7z a $HOME/ci-test-$TRAVIS_TAG-Linux64.tar.gz $TRAVIS_BUILD_DIR/build/class_initializer
- - 7z a $HOME/ci-test-$TRAVIS_TAG-Linux64.tar.gz $TRAVIS_BUILD_DIR/build/for_auto
- - 7z a $HOME/ci-test-$TRAVIS_TAG-Linux64.tar.gz $TRAVIS_BUILD_DIR/build/for_lambda
- - 7z a $HOME/ci-test-$TRAVIS_TAG-Linux64.tar.gz $TRAVIS_BUILD_DIR/build/vector_initializer
+ - cd $TRAVIS_BUILD_DIR/build
+ - 7z a $HOME/ci-test-$TRAVIS_TAG-Linux64.tar.gz class_initializer for_auto for_lambda vector_initializer
