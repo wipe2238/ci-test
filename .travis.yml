@@ -12,7 +12,6 @@ matrix:
        - ubuntu-toolchain-r-test
       packages:
        - g++-5
-       - p7zip-full
   - os: linux
     compiler: g++
     env: BUILD=Release COMPILER=g++-5
@@ -22,6 +21,7 @@ matrix:
        - ubuntu-toolchain-r-test
       packages:
        - g++-5
+       - p7zip-full
   ## linux g++ 4.9
   - os: linux
     compiler: g++
