@@ -53,7 +53,7 @@ deploy:
 
 before_deploy:
  - if "%PLATFORM%" == "Win32" set ZipArch=Win32
- - if "%PLATFORM%" == "x86"   set ZipArch=Win64
+ - if "%PLATFORM%" == "x64"   set ZipArch=Win64
  - del c:\projects\ci-test\build\%CONFIGURATION%\CompilerIdCXX.exe
  - 7z a %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip c:\projects\ci-test\build\%CONFIGURATION%\*.exe
  - appveyor PushArtifact %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip
