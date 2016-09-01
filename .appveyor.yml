@@ -23,12 +23,12 @@ matrix:
 
 before_build:
  - cd c:\projects\ci-test\build
- - if "%VisualStudioVersion%" == "14" set VSYear="2015"
- - if "%VisualStudioVersion%" == "12" set VSYear="2013"
- - if "%VisualStudioVersion%" == "11" set VSYear="2012"
- - if "%VisualStudioVersion%" == "10" set VSYear="2010"
+ - if "%VisualStudioVersion%" == "14" set VSYear=2015
+ - if "%VisualStudioVersion%" == "12" set VSYear=2013
+ - if "%VisualStudioVersion%" == "11" set VSYear=2012
+ - if "%VisualStudioVersion%" == "10" set VSYear=2010
  - if "%PLATFORM%" == "Win32" set VSArch=
- - if "%PLATFORM%" == "Win64" set VSArch=" Win64"
+ - if "%PLATFORM%" == "Win64" set VSArch= Win64
  - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
  - type ci-test.sln
 
