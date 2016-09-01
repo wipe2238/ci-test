@@ -4,6 +4,9 @@ project( ci-test LANGUAGES CXX )
 
 set( CMAKE_CXX_STANDARD 11 )
 
+message( STATUS "Visual Studio $ENV{VisualStudioVersion} $ENV{VSYear}$ENV{VSArch}" )
+
+
 macro( mktest target )
 	add_executable( ${target} ${target}.cpp)
 endmacro()
