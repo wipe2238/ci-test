@@ -27,7 +27,9 @@ before_build:
  - if "%VisualStudioVersion%" == "12" set VisualStudioYear="2013"
  - if "%VisualStudioVersion%" == "11" set VisualStudioYear="2012"
  - if "%VisualStudioVersion%" == "10" set VisualStudioYear="2010"
- - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VisualStudioYear%" ..
+ - if "%platform%" == "x86" set VisualStudioWin="Win32"
+ - if "%platform%" == "x64" set VisualStudioWin="Win64"
+ - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VisualStudioYear% %VisualStudioWin%" ..
 
 build:
  project: c:\projects\ci-test\build\ci-test.sln
