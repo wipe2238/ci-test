@@ -11,9 +11,10 @@ matrix:
       sources:
        - ubuntu-toolchain-r-test
       packages:
-       - linux-libc-dev
+       - linux-libc-dev:i386
        - gcc-5-multilib
        - g++-5-multilib
+       - cmake
   - os: linux
     compiler: g++
     env: BUILD=Release COMPILER=g++-5 ARCH=32
@@ -22,7 +23,7 @@ matrix:
       sources:
        - ubuntu-toolchain-r-test
       packages:
-       - linux-libc-dev
+       - linux-libc-dev:i386
        - gcc-5-multilib
        - g++-5-multilib
        - p7zip-full
