@@ -35,7 +35,7 @@ before_build:
  - if "%VisualStudioVersion%" == "10" set VSYear=2010
  - if "%PLATFORM%" == "Win32" set VSArch=
  - if "%PLATFORM%" == "x64"   set VSArch= Win64
- - C:\cmake\bin\cmake.exe -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
+ - C:\cmake\cmake-%CMAKE_VERL%-win32-x86\bin\cmake.exe -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
 
 build:
  project: c:\projects\ci-test\build\ci-test.sln
