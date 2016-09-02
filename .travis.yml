@@ -1,9 +1,5 @@
 language: cpp
 
-addons:
- apt:
-  sources:
-   - ubuntu-toolchain-r-test
 
 matrix:
  include:
@@ -12,6 +8,8 @@ matrix:
     env: COMPILER=g++-6 BUILD=Debug ARCH=32
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-6-multilib
@@ -21,6 +19,8 @@ matrix:
     env: COMPILER=g++-6 BUILD=Debug ARCH=64
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - g++-6
   - os: linux
@@ -28,6 +28,8 @@ matrix:
     env: COMPILER=g++-6 BUILD=Release ARCH=32
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-6-multilib
@@ -38,6 +40,8 @@ matrix:
     env: COMPILER=g++-6 BUILD=Release ARCH=64
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - g++-6
        - p7zip-full
@@ -46,6 +50,8 @@ matrix:
     env: COMPILER=g++-5 BUILD=Debug ARCH=32
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-5-multilib
@@ -55,6 +61,8 @@ matrix:
     env: COMPILER=g++-5 BUILD=Debug ARCH=64
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - g++-5
   - os: linux
@@ -62,6 +70,8 @@ matrix:
     env: COMPILER=g++-5 BUILD=Release ARCH=32
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-5-multilib
@@ -71,6 +81,8 @@ matrix:
     env: COMPILER=g++-5 BUILD=Release ARCH=64
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - g++-5
   - os: linux
@@ -87,6 +99,8 @@ matrix:
     env: COMPILER=g++-4.9 BUILD=Debug ARCH=64
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - g++-4.9
   - os: linux
@@ -94,6 +108,8 @@ matrix:
     env: COMPILER=g++-4.9 BUILD=Release ARCH=32
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-4.9-multilib
@@ -103,6 +119,8 @@ matrix:
     env: COMPILER=g++-4.9 BUILD=Release ARCH=64
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - g++-4.9
   - os: linux
@@ -110,6 +128,8 @@ matrix:
     env: COMPILER=g++-4.8 BUILD=Debug ARCH=32
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-4.8-multilib
@@ -119,6 +139,8 @@ matrix:
     env: COMPILER=g++-4.8 BUILD=Debug ARCH=64
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - g++-4.8
   - os: linux
@@ -126,6 +148,8 @@ matrix:
     env: BUILD=Release ARCH=32
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-4.8-multilib
@@ -135,6 +159,8 @@ matrix:
     env: BUILD=Release ARCH=64
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - g++-4.8
  ##
