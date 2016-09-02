@@ -5,15 +5,6 @@ project( ci-test LANGUAGES CXX )
 set( CMAKE_CXX_STANDARD 11 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 
-function( add_compile_option target var flag )
-	include( CheckCXXCompilerFlag )
-	check_cxx_compiler_flag( ${flag} ${var} )
-
-	if( ${var} )
-		target_compile_options( ${target} PRIVATE ${flag} )
-	endif()
-endfunction()
-
 function( lib_filesystem target )
 	include(CheckIncludeFileCXX)
 
@@ -31,21 +22,14 @@ function( lib_filesystem target )
 		target_link_libraries( ${target} stdc++fs )
 	endif()
 
+	if( NOT HAVE_FILESYSTEM AND NOT HAVE_EXPERIMENTAL_FILESYSTEM )
+		message( STATUS "Excluded target : ${target}" )
+		set_target_properties( ${target} PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1 )
+	endif()
 endfunction()
 
 macro( mktest target )
 	add_executable( ${target} ${target}.cpp)
-
-	if( CMAKE_COMPILER_IS_GNUCXX )
-		add_compile_option( ${target} COMPILER_WALL   -Wall )
-		add_compile_option( ${target} COMPILER_WERROR -Werror )
-		add_compile_option( ${target} COMPILER_WEXTRA -Wextra )
-	elseif( MSVC )
-		add_compile_option( ${target} COMPILER_WALL   /Wall )
-		add_compile_option( ${target} COMPILER_WD4515 /wd4514 ) # derp
-		add_compile_option( ${target} COMPILER_WD4710 /wd4710 ) # derp?
-		add_compile_option( ${target} COMPILER_WX     /WX )
-	endif()
 endmacro()
 
 mktest( class_initializer )
@@ -53,11 +37,7 @@ mktest( for_auto )
 mktest( for_lambda )
 mktest( vector_initializer )
 
-if( HAVE_FILESYSTEM OR HAVE_EXPERIMENTAL_FILESYSTEM )
-	mktest( filesystem )
-	lib_filesystem( filesystem )
-else()
-	message( STATUS "Excluding executable : filesystem" )
-endif()
+mktest( filesystem )
+lib_filesystem( filesystem )
 
 configure_file( ${PROJECT_SOURCE_DIR}/CMake.hpp.in ${PROJECT_SOURCE_DIR}/CMake.hpp NEWLINE_STYLE UNIX )
