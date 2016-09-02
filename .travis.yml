@@ -11,6 +11,7 @@ matrix:
       sources:
        - ubuntu-toolchain-r-test
       packages:
+       - linux-libc-dev
        - gcc-5-multilib
        - g++-5-multilib
   - os: linux
@@ -21,6 +22,7 @@ matrix:
       sources:
        - ubuntu-toolchain-r-test
       packages:
+       - linux-libc-dev
        - gcc-5-multilib
        - g++-5-multilib
        - p7zip-full
@@ -84,10 +86,14 @@ matrix:
        - g++-4.8
  ##
  allow_failures:
-  - env: BUILD=Debug COMPILER=g++-4.9
-  - env: BUILD=Release COMPILER=g++-4.9
-  - env: BUILD=Debug COMPILER=g++-4.8
-  - env: BUILD=Release COMPILER=g++-4.8
+  - env: BUILD=Debug COMPILER=g++-4.9 ARCH=32
+  - env: BUILD=Release COMPILER=g++-4.9 ARCH=32
+  - env: BUILD=Debug COMPILER=g++-4.9 ARCH=64
+  - env: BUILD=Release COMPILER=g++-4.9 ARCH=64
+  - env: BUILD=Debug COMPILER=g++-4.8 ARCH=32
+  - env: BUILD=Release COMPILER=g++-4.8 ARCH=32
+  - env: BUILD=Debug COMPILER=g++-4.8 ARCH=64
+  - env: BUILD=Release COMPILER=g++-4.8 ARCH=64
 
 before_script:
  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
