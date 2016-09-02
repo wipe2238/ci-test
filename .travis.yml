@@ -97,6 +97,7 @@ matrix:
   - env: BUILD=Release COMPILER=g++-4.8 ARCH=64
 
 before_script:
+ - cmake --version
  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     cmake_ver=3.4.2 ;
     cmake_arch= ;
