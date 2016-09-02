@@ -11,8 +11,7 @@ matrix:
       sources:
        - ubuntu-toolchain-r-test
       packages:
-       - gcc-5:i386
-       - g++-5:i386
+       - g++-5-multilib
   - os: linux
     compiler: g++
     env: BUILD=Release COMPILER=g++-5 ARCH=32
@@ -21,8 +20,7 @@ matrix:
       sources:
        - ubuntu-toolchain-r-test
       packages:
-       - gcc-5:i386
-       - g++-5:i386
+       - g++-5-multilib
        - p7zip-full
   ## linux g++ 5.x x64
   - os: linux
@@ -97,7 +95,7 @@ before_script:
      cmake_arch=i386 ;
     elif [[ "${ARCH}" == "64" ]]; then
      cmake_arch=x86_64 ;
-    fi
+    fi ;
     wget --no-check-certificate http://cmake.org/files/v${cmake_ver%.*}/cmake-${cmake_ver}-Linux-${cmake_arch}.sh -O /tmp/cmake.sh ;
     sh /tmp/cmake.sh --prefix=$HOME --exclude-subdir ;
     export PATH=$HOME/bin:$PATH ;
