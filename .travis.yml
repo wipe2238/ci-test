@@ -1,36 +1,10 @@
 language: cpp
 
-env:
- matrix:
-  - BUILD=Debug
-  - BUILD=Release
-
 matrix:
  include:
   - os: linux
     compiler: g++
-    env: CXX=g++-4.8 ARCH=32
-    addons:
-     apt:
-      sources:
-       - ubuntu-toolchain-r-test
-      packages:
-       - linux-libc-dev:i386
-       - gcc-4.8-multilib
-       - g++-4.8-multilib
-  - os: linux
-    compiler: g++
-    env: CXX=g++-4.8 ARCH=64
-    addons:
-     apt:
-      sources:
-       - ubuntu-toolchain-r-test
-      packages:
-       - g++-4.8
-
-  - os: linux
-    compiler: g++
-    env: COMPILER=g++-6 ARCH=32
+    env: COMPILER=g++-6 BUILD=Debug ARCH=32
     addons:
      apt:
       sources:
@@ -41,13 +15,35 @@ matrix:
        - g++-6-multilib
   - os: linux
     compiler: g++
-    env: COMPILER=g++-6 ARCH=64
+    env: COMPILER=g++-6 BUILD=Debug ARCH=64
     addons:
      apt:
       sources:
        - ubuntu-toolchain-r-test
       packages:
        - g++-6
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-6 BUILD=Release ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-6-multilib
+       - g++-6-multilib
+       - p7zip-full
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-6 BUILD=Release ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-6
+       - p7zip-full
   - os: linux
     compiler: g++
     env: COMPILER=g++-5 BUILD=Debug ARCH=32
@@ -93,6 +89,8 @@ matrix:
     env: COMPILER=g++-4.9 BUILD=Debug ARCH=32
     addons:
      apt:
+      sources:
+       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-4.9-multilib
@@ -126,6 +124,46 @@ matrix:
        - ubuntu-toolchain-r-test
       packages:
        - g++-4.9
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-4.8 BUILD=Debug ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-4.8-multilib
+       - g++-4.8-multilib
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-4.8 BUILD=Debug ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-4.8
+  - os: linux
+    compiler: g++-4.8
+    env: BUILD=Release ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-4.8-multilib
+       - g++-4.8-multilib
+  - os: linux
+    compiler: g++-4.8
+    env: BUILD=Release ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-4.8
  ##
  allow_failures:
   - env: COMPILER=g++-4.9 BUILD=Debug ARCH=32
@@ -134,18 +172,13 @@ matrix:
   - env: COMPILER=g++-4.9 BUILD=Release ARCH=64
   - env: COMPILER=g++-4.8 BUILD=Debug ARCH=32
   - env: COMPILER=g++-4.8 BUILD=Debug ARCH=64
-  - env: CXX=g++-4.8
+  - env: COMPILER=g++-4.8 BUILD=Release ARCH=32
+  - env: COMPILER=g++-4.8 BUILD=Release ARCH=64
 
 before_script:
  - if [[ "${TRAVIS_OS_NAME}" == "linux" && -f "${TRAVIS_BUILD_DIR}/CMakeLists.txt" ]]; then
     cmake_ver=`cat ${TRAVIS_BUILD_DIR}/CMakeLists.txt | grep cmake_minimum_required | grep -oP '(?<=VERSION )\d+\.\d+\.\d+'`;
-    cmake_arch= ;
-    if [[ "${ARCH}" == "32" ]]; then
-     cmake_arch=i386 ;
-    elif [[ "${ARCH}" == "64" ]]; then
-     cmake_arch=x86_64 ;
-    fi ;
-    wget --no-check-certificate http://cmake.org/files/v${cmake_ver%.*}/cmake-${cmake_ver}-Linux-${cmake_arch}.sh -O /tmp/cmake.sh ;
+    wget --no-check-certificate http://cmake.org/files/v${cmake_ver%.*}/cmake-${cmake_ver}-Linux-x86_64.sh -O /tmp/cmake.sh ;
     sh /tmp/cmake.sh --prefix=$HOME --exclude-subdir ;
     export PATH=$HOME/bin:$PATH ;
    fi

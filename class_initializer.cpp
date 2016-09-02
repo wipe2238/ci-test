@@ -6,7 +6,7 @@ struct CL
 	int c = 1207;
 };
 
-int main( int argc, char** argv )
+int main( int, char** )
 {
 	CL C;
 	std::cout << C.c << std::endl;
