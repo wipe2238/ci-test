@@ -1,6 +1,8 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "CMake.hpp"
+
 #if defined(HAVE_FILESYSTEM)
  #include <filesystem>
  namespace fs = std::filesystem;

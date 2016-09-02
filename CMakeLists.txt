@@ -21,16 +21,13 @@ function( lib_filesystem target )
 	set( CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS} ${CMAKE_CXX11_STANDARD_COMPILE_OPTION}" )
 
 	check_include_file_cxx( filesystem HAVE_FILESYSTEM )
-	if( HAVE_FILESYSTEM )
-		target_compile_definitions( ${target} PRIVATE -DHAVE_FILESYSTEM=1 )
-	else()
+	if( NOT HAVE_FILESYSTEM )
 		check_include_file_cxx( experimental/filesystem HAVE_EXPERIMENTAL_FILESYSTEM )
 	endif()
 
 	set( CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS_OLD}" )
 
 	if( HAVE_EXPERIMENTAL_FILESYSTEM )
-		target_compile_definitions( ${target} PRIVATE -DHAVE_EXPERIMENTAL_FILESYSTEM=1 )
 		target_link_libraries( ${target} stdc++fs )
 	endif()
 
@@ -46,14 +43,21 @@ macro( mktest target )
 	elseif( MSVC )
 		add_compile_option( ${target} COMPILER_WALL   /Wall )
 		add_compile_option( ${target} COMPILER_WD4515 /wd4514 ) # derp
+		add_compile_option( ${target} COMPILER_WD4710 /wd4710 ) # derp?
 		add_compile_option( ${target} COMPILER_WX     /WX )
 	endif()
 endmacro()
 
 mktest( class_initializer )
-mktest( filesystem )
 mktest( for_auto )
 mktest( for_lambda )
 mktest( vector_initializer )
 
-lib_filesystem( filesystem )
+if( HAVE_FILESYSTEM OR HAVE_EXPERIMENTAL_FILESYSTEM )
+	mktest( filesystem )
+	lib_filesystem( filesystem )
+else()
+	message( STATUS "Excluding executable : filesystem" )
+endif()
+
+configure_file( ${PROJECT_SOURCE_DIR}/CMake.hpp.in ${PROJECT_SOURCE_DIR}/CMake.hpp NEWLINE_STYLE UNIX )

@@ -146,7 +146,7 @@ matrix:
        - g++-4.8
   - os: linux
     compiler: g++-4.8
-    env: BUILD=Release ARCH=32
+    env: COMPILER=g++-4.8 BUILD=Release ARCH=32
     addons:
      apt:
       sources:
@@ -157,7 +157,7 @@ matrix:
        - g++-4.8-multilib
   - os: linux
     compiler: g++-4.8
-    env: BUILD=Release ARCH=64
+    env: COMPILER=g++-4.8 BUILD=Release ARCH=64
     addons:
      apt:
       sources:
@@ -184,14 +184,9 @@ before_script:
    fi
 
 script:
- - set
  - cd $TRAVIS_BUILD_DIR/build
- - if [[ "${COMPILER}" ==  "" ]]; then
-    cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_FLAGS=-m${ARCH} .. && make ;
-   else
-    cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_CXX_FLAGS=-m${ARCH} .. && make ;
-   fi
-
+ - cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_CXX_FLAGS=-m${ARCH} ..
+ - make
 
 deploy:
  provider: releases
