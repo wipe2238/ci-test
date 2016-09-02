@@ -1,207 +1,151 @@
 language: cpp
 
+addons:
+ apt:
+  sources:
+   - ubuntu-toolchain-r-test
+
 matrix:
  include:
-  ## Linux g++ 6.x
-   ## Debug
-    ## x32
   - os: linux
     compiler: g++
     env: COMPILER=g++-6 BUILD=Debug ARCH=32
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-6-multilib
        - g++-6-multilib
-    ## x64
   - os: linux
     compiler: g++
     env: COMPILER=g++-6 BUILD=Debug ARCH=64
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - g++-6
-   ## Release
-    ## x32
   - os: linux
     compiler: g++
     env: COMPILER=g++-6 BUILD=Release ARCH=32
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-6-multilib
        - g++-6-multilib
        - p7zip-full
-    ## x64
   - os: linux
     compiler: g++
     env: COMPILER=g++-6 BUILD=Release ARCH=64
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - g++-6
        - p7zip-full
-  ## Linux g++ 5.x
-   ## Debug
-    ## x32
   - os: linux
     compiler: g++
     env: COMPILER=g++-5 BUILD=Debug ARCH=32
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-5-multilib
        - g++-5-multilib
-    ## x64
   - os: linux
     compiler: g++
     env: COMPILER=g++-5 BUILD=Debug ARCH=64
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - g++-5
-   ## Release
-    ## x32
   - os: linux
     compiler: g++
     env: COMPILER=g++-5 BUILD=Release ARCH=32
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-5-multilib
        - g++-5-multilib
-    ## x64
   - os: linux
     compiler: g++
     env: COMPILER=g++-5 BUILD=Release ARCH=64
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - g++-5
-  ## Linux g++ 4.9
-   ## Debug
-    ## x32
   - os: linux
     compiler: g++
     env: COMPILER=g++-4.9 BUILD=Debug ARCH=32
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-4.9-multilib
        - g++-4.9-multilib
-    ## x64
   - os: linux
     compiler: g++
     env: COMPILER=g++-4.9 BUILD=Debug ARCH=64
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - g++-4.9
-   ## Release
-    ## x32
   - os: linux
     compiler: g++
     env: COMPILER=g++-4.9 BUILD=Release ARCH=32
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-4.9-multilib
        - g++-4.9-multilib
-    ## x64
   - os: linux
     compiler: g++
     env: COMPILER=g++-4.9 BUILD=Release ARCH=64
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - g++-4.9
-  ## Linux g++ 4.8
-   ## Debug
-    ## x32
   - os: linux
     compiler: g++
     env: COMPILER=g++-4.8 BUILD=Debug ARCH=32
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-4.8-multilib
        - g++-4.8-multilib
-    ## x64
   - os: linux
     compiler: g++
     env: COMPILER=g++-4.8 BUILD=Debug ARCH=64
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - g++-4.8
-   ## Release
-    ## x32
   - os: linux
-    compiler: g++
-    env: COMPILER=g++-4.8 BUILD=Release ARCH=32
+    compiler: g++-4.8
+    env: BUILD=Release ARCH=32
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - linux-libc-dev:i386
        - gcc-4.8-multilib
        - g++-4.8-multilib
-    ## x64
   - os: linux
-    compiler: g++
-    env: COMPILER=g++-4.8 BUILD=Release ARCH=64
+    compiler: g++-4.8
+    env: BUILD=Release ARCH=64
     addons:
      apt:
-      sources:
-       - ubuntu-toolchain-r-test
       packages:
        - g++-4.8
  ##
  allow_failures:
-  - env: BUILD=Debug COMPILER=g++-4.9 ARCH=32
-  - env: BUILD=Debug COMPILER=g++-4.9 ARCH=64
-  - env: BUILD=Release COMPILER=g++-4.9 ARCH=32
-  - env: BUILD=Release COMPILER=g++-4.9 ARCH=64
-  - env: BUILD=Debug COMPILER=g++-4.8 ARCH=32
-  - env: BUILD=Debug COMPILER=g++-4.8 ARCH=64
-  - env: BUILD=Release COMPILER=g++-4.8 ARCH=32
-  - env: BUILD=Release COMPILER=g++-4.8 ARCH=64
+  - env: COMPILER=g++-4.9 BUILD=Debug ARCH=32
+  - env: COMPILER=g++-4.9 BUILD=Debug ARCH=64
+  - env: COMPILER=g++-4.9 BUILD=Release ARCH=32
+  - env: COMPILER=g++-4.9 BUILD=Release ARCH=64
+  - env: COMPILER=g++-4.8 BUILD=Debug ARCH=32
+  - env: COMPILER=g++-4.8 BUILD=Debug ARCH=64
+  - compiler: g++-4.8
 
 before_script:
  - if [[ "${TRAVIS_OS_NAME}" == "linux" && -f "${TRAVIS_BUILD_DIR}/CMakeLists.txt" ]]; then
@@ -218,8 +162,13 @@ before_script:
    fi
 
 script:
+ - set
  - cd $TRAVIS_BUILD_DIR/build
- - cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_CXX_FLAGS=-m${ARCH} .. && make
+ - if [[ "${COMPILER}" ==  "" ]; then
+    cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_FLAGS=-m${ARCH} .. && make ;
+   else
+    cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_CXX_FLAGS=-m${ARCH} .. && make ;
+   fi
 
 
 deploy:
