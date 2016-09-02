@@ -190,7 +190,7 @@ before_script:
 script:
  - set
  - cd $TRAVIS_BUILD_DIR/build
- - if [[ "${COMPILER}" ==  "" ]; then
+ - if [[ "${COMPILER}" ==  "" ]]; then
     cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_FLAGS=-m${ARCH} .. && make ;
    else
     cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_CXX_FLAGS=-m${ARCH} .. && make ;
