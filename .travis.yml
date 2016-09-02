@@ -185,7 +185,7 @@ matrix:
 
 before_script:
  - if [[ "${TRAVIS_OS_NAME}" == "linux" && -f "${TRAVIS_BUILD_DIR}/CMakeLists.txt" ]]; then
-    cmake_ver=`cat ${TRAVIS_BUILD_DIR}/CMakeLists.txt | grep cmake_minimum_required | grep -oP '(?<=VERSION )\d+\.\d+\.\d+'``;
+    cmake_ver=`cat ${TRAVIS_BUILD_DIR}/CMakeLists.txt | grep cmake_minimum_required | grep -oP '(?<=VERSION )\d+\.\d+\.\d+'`;
     cmake_arch= ;
     if [[ "${ARCH}" == "32" ]]; then
      cmake_arch=i386 ;
