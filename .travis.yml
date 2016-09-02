@@ -103,7 +103,7 @@ before_script:
 
 script:
  - cd $TRAVIS_BUILD_DIR/build
- - cmake -DCMAKE_BUILD_TYPE=$BUILD -DCMAKE_CXX_COMPILER=$COMPILER ..
+ - cmake -DCMAKE_BUILD_TYPE=$BUILD -DCMAKE_CXX_COMPILER=$COMPILER -DCMAKE_CXX_FLAGS=-m${ARCH} ..
  - make
  - file for_auto
 
