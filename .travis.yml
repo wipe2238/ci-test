@@ -188,6 +188,10 @@ script:
  - cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_CXX_FLAGS=-m${ARCH} ..
  - make
 
+before_deploy:
+ - cd $TRAVIS_BUILD_DIR/build
+ - 7z a /tmp/${TRAVIS_REPO_SLUG##*/}-${TRAVIS_TAG}-Linux${ARCH}.zip class_initializer for_auto for_lambda vector_initializer
+
 deploy:
  provider: releases
  api_key:
@@ -202,7 +206,3 @@ deploy:
   branch: master
   tags: true
   condition: $BUILD == Release && $COMPILER == g++-6
-
-before_deploy:
- - cd $TRAVIS_BUILD_DIR/build
- - 7z a /tmp/${TRAVIS_REPO_SLUG##*/}-${TRAVIS_TAG}-Linux${ARCH}.zip class_initializer for_auto for_lambda vector_initializer

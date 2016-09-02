@@ -21,6 +21,14 @@ matrix:
   - VisualStudioVersion: 11
   - VisualStudioVersion: 10
 
+install:
+ - set CMAKE_VERS=3.4
+ - set CMAKE_VERL=3.4.2
+ - appveyor DownloadFile http://cmake.org/files/v%CMAKE_VERS%/cmake-%CMAKE_VERL%-win32-x86.zip -Filename C:\cmake.zip
+ - 7z x C:\cmake.zip -oC:\cmake
+ - set PATH=C:\cmake\bin;%PATH%
+ - cmake --version
+
 before_build:
  - cd c:\projects\ci-test\build
  - if "%VisualStudioVersion%" == "14" set VSYear=2015
@@ -34,6 +42,12 @@ before_build:
 build:
  project: c:\projects\ci-test\build\ci-test.sln
 
+before_deploy:
+ - if "%PLATFORM%" == "Win32" set ZipArch=Win32
+ - if "%PLATFORM%" == "x64"   set ZipArch=Win64
+ - del c:\projects\ci-test\build\%CONFIGURATION%\CompilerIdCXX.exe
+ - 7z a %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip c:\projects\ci-test\build\%CONFIGURATION%\*.exe
+ - appveyor PushArtifact %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip
 
 deploy:
  provider: GitHub
@@ -49,10 +63,3 @@ deploy:
   appveyor_repo_tag: true
   configuration: Release
   VisualStudioVersion: 14
-
-before_deploy:
- - if "%PLATFORM%" == "Win32" set ZipArch=Win32
- - if "%PLATFORM%" == "x64"   set ZipArch=Win64
- - del c:\projects\ci-test\build\%CONFIGURATION%\CompilerIdCXX.exe
- - 7z a %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip c:\projects\ci-test\build\%CONFIGURATION%\*.exe
- - appveyor PushArtifact %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip
