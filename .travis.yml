@@ -2,6 +2,50 @@ language: cpp
 
 matrix:
  include:
+  ## linux g++ 6.x x32
+  - os: linux
+    compiler: g++
+    env: BUILD=Debug COMPILER=g++-6 ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-6-multilib
+       - g++-6-multilib
+  - os: linux
+    compiler: g++
+    env: BUILD=Release COMPILER=g++-6 ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-6-multilib
+       - g++-6-multilib
+       - p7zip-full
+  ## linux g++ 6.x x64
+  - os: linux
+    compiler: g++
+    env: BUILD=Debug COMPILER=g++-6 ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-6
+  - os: linux
+    compiler: g++
+    env: BUILD=Release COMPILER=g++-6 ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-6
+       - p7zip-full
   ## linux g++ 5.x x32
   - os: linux
     compiler: g++
@@ -25,7 +69,6 @@ matrix:
        - linux-libc-dev:i386
        - gcc-5-multilib
        - g++-5-multilib
-       - p7zip-full
   ## linux g++ 5.x x64
   - os: linux
     compiler: g++
@@ -45,7 +88,6 @@ matrix:
        - ubuntu-toolchain-r-test
       packages:
        - g++-5
-       - p7zip-full
   ## linux g++ 4.9 x32
   - os: linux
     compiler: g++
@@ -142,8 +184,8 @@ matrix:
   - env: BUILD=Release COMPILER=g++-4.8 ARCH=64
 
 before_script:
- - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    cmake_ver=3.4.2 ;
+ - if [[ "${TRAVIS_OS_NAME}" == "linux" && -f "${TRAVIS_BUILD_DIR}/CMakeLists.txt" ]]; then
+    cmake_ver=`cat ${TRAVIS_BUILD_DIR}/CMakeLists.txt | grep cmake_minimum_required | grep -oP '(?<=VERSION )\d+\.\d+\.\d+'``;
     cmake_arch= ;
     if [[ "${ARCH}" == "32" ]]; then
      cmake_arch=i386 ;
@@ -157,17 +199,15 @@ before_script:
 
 script:
  - cd $TRAVIS_BUILD_DIR/build
- - cmake -DCMAKE_BUILD_TYPE=$BUILD -DCMAKE_CXX_COMPILER=$COMPILER -DCMAKE_CXX_FLAGS=-m${ARCH} ..
- - make
- - file for_auto
+ - cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_CXX_FLAGS=-m${ARCH} .. && make
 
 
 deploy:
  provider: releases
  api_key:
   secure: "BXB3KTknuom4G+uLBxEDi+14uMD5cDbuPZzGUqBvQc6Pf/RiVGMj/AN3AFxJuDc9U7QZMRSA2KqkMCjWzCESK3Rb8sgSJLXoa2YvGDfJCRQ7rQJf7xXxa/PSOtpe0pdH7vUvCKnMdS0Muq9nEcxnm/fa0W63s/xdY7NmVN/a3VgRyPt/PVMjnPN3/p3DLArSpHZ3dyZxC1O35AD2xAzUz1bJZWpQlj8ElwbE923I7spWC9/jvr0yZKQqJpyBuyzOnVyHoQyw5oUn0/x7yLTwgcTPY/T35to3xw8JXixyl1qB1WScDh5mYn6XWULWr5bTLhepD3AUJCuD32ki4wJo1nZZe+rN17Ojw338O1eKZRowAMP1uo7RZTOPLglDlohKm3JWXyzFB+8pxmnhWpfQPuzty+sx3RdIDRZznvDZC2lSVvMpKi6T7ZKRTaxfUV/QyHg7c1Bwgua5+1R14wwb7gddZrUZdMjwtp4/MmP+9r2UF3BJApVzXiGef4GPK3vsYNc+FzJitObvsVr1KGqeLGlmQ0rS3zHl3i2PDOoMm/gcOpnOSOFGisBZkLqjUPhcKB1JUE2rn7zmYXx8l3Pi3O7p4VrZfmQPFWRRpznxHzuZJ9MHomFVP9lAJAOTdgZdzgtqlsG7CDTJkRrQW6Pl2sr/NQwl/ZiZOONh1oLm0hk="
- file: /tmp/ci-test-${TRAVIS_TAG}-Linux${ARCH}.zip
- name: ci-test v${TRAVIS_TAG}
+ file: /tmp/${TRAVIS_REPO_SLUG##*/}-${TRAVIS_TAG}-Linux${ARCH}.zip
+ name: ${TRAVIS_REPO_SLUG##*/} v${TRAVIS_TAG}
  body: Automated build
  draft: false
  prerelease: true
@@ -175,8 +215,8 @@ deploy:
  on:
   branch: master
   tags: true
-  condition: $BUILD == Release && $COMPILER == g++-5
+  condition: $BUILD == Release && $COMPILER == g++-6
 
 before_deploy:
  - cd $TRAVIS_BUILD_DIR/build
- - 7z a /tmp/ci-test-${TRAVIS_TAG}-Linux${ARCH}.zip class_initializer for_auto for_lambda vector_initializer
+ - 7z a /tmp/${TRAVIS_REPO_SLUG##*/}-${TRAVIS_TAG}-Linux${ARCH}.zip class_initializer for_auto for_lambda vector_initializer
