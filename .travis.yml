@@ -11,6 +11,7 @@ matrix:
       sources:
        - ubuntu-toolchain-r-test
       packages:
+       - gcc-5:i386
        - g++-5:i386
   - os: linux
     compiler: g++
@@ -20,6 +21,7 @@ matrix:
       sources:
        - ubuntu-toolchain-r-test
       packages:
+       - gcc-5:i386
        - g++-5:i386
        - p7zip-full
   ## linux g++ 5.x x64
@@ -89,12 +91,12 @@ matrix:
 
 before_script:
  - if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    cmake_ver=3.4.2
-    cmake_arch=
+    cmake_ver=3.4.2 ;
+    cmake_arch= ;
     if [[ "${ARCH}" == "32" ]]; then
-     cmake_arch=i386
+     cmake_arch=i386 ;
     elif [[ "${ARCH}" == "64" ]]; then
-     cmake_arch=x86_64
+     cmake_arch=x86_64 ;
     fi
     wget --no-check-certificate http://cmake.org/files/v${cmake_ver%.*}/cmake-${cmake_ver}-Linux-${cmake_arch}.sh -O /tmp/cmake.sh ;
     sh /tmp/cmake.sh --prefix=$HOME --exclude-subdir ;
