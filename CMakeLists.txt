@@ -1,5 +1,5 @@
 cmake_minimum_required( VERSION 3.4.2 )
-
+message( STATUS "CMake ${CMAKE_VERSION}" )
 project( ci-test LANGUAGES CXX )
 
 set( CMAKE_CXX_STANDARD 11 )
@@ -30,6 +30,10 @@ endfunction()
 
 macro( mktest target )
 	add_executable( ${target} ${target}.cpp)
+
+	if( NOT CMAKE_BUILD_TYPE STREQUAL "Debug" )
+		target_compile_definitions( ${target} PRIVATE -DNDEBUG )
+	endif()
 endmacro()
 
 mktest( class_initializer )

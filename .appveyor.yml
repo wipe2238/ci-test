@@ -26,8 +26,6 @@ install:
  - set CMAKE_VERL=3.4.2
  - appveyor DownloadFile http://cmake.org/files/v%CMAKE_VERS%/cmake-%CMAKE_VERL%-win32-x86.zip -Filename C:\cmake.zip
  - 7z x C:\cmake.zip -oC:\cmake
- - set PATH=C:\cmake\bin;%PATH%
- - cmake --version
 
 before_build:
  - cd c:\projects\ci-test\build
@@ -37,7 +35,7 @@ before_build:
  - if "%VisualStudioVersion%" == "10" set VSYear=2010
  - if "%PLATFORM%" == "Win32" set VSArch=
  - if "%PLATFORM%" == "x64"   set VSArch= Win64
- - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
+ - C:\cmake\bin\cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
 
 build:
  project: c:\projects\ci-test\build\ci-test.sln
