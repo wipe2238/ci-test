@@ -184,7 +184,7 @@ matrix:
        - g++-4.8-multilib
     ## x64
   - os: linux
-    compiler: g++-4.8
+    compiler: g++
     env: COMPILER=g++-4.8 BUILD=Release ARCH=64
     addons:
      apt:
