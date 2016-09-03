@@ -175,6 +175,9 @@ matrix:
   - env: COMPILER=g++-4.8 BUILD=Release ARCH=32
   - env: COMPILER=g++-4.8 BUILD=Release ARCH=64
 
+install:
+ - cmake --version
+
 before_script:
  - if [[ "${TRAVIS_OS_NAME}" == "linux" && -f "${TRAVIS_BUILD_DIR}/CMakeLists.txt" ]]; then
     cmake_ver=`cat ${TRAVIS_BUILD_DIR}/CMakeLists.txt | grep cmake_minimum_required | grep -oP '(?<=VERSION )\d+\.\d+\.\d+'`;
