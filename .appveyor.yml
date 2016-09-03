@@ -63,7 +63,7 @@ deploy:
     appveyor_repo_tag: true
     configuration: Release
     VisualStudioVersion: 14
- - provider: ftp
+ - provider: FTP
    protocol: sftp
    host:
     secure: K4EVPmbtVRC3ewwAfdcyyw==
