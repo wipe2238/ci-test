@@ -26,13 +26,13 @@ matrix:
 install:
  - set
  - cmake --version
- - cd c:\projects\%APPVEYOR_PROJECT_NAME%
- - cmake -DCI=APPVEYOR -DCMAKELISTS=CMakeLists.txt -DCMDIR=c:\cmake -P cmake\CI\GetCmake.cmake
+ - cd %APPVEYOR_BUILD_FOLDER%
+ - cmake -DCMAKELISTS=CMakeLists.txt -DCMDIR=c:\cmake -P cmake\CI\GetCMake.cmake
  - set PATH=C:\cmake\bin;%PATH%
  - cmake --version
 
 before_build:
- - cd c:\projects\%APPVEYOR_PROJECT_NAME%
+ - cd %APPVEYOR_BUILD_FOLDER%
  - git submodule update --init --recursive
  - cd build
  - if "%VisualStudioVersion%" == "14" set VSYear=2015
@@ -44,13 +44,13 @@ before_build:
  - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
 
 build:
- project: c:\projects\%APPVEYOR_PROJECT_NAME%\build\%APPVEYOR_PROJECT_NAME%.sln
+ project: %APPVEYOR_BUILD_FOLDER%\build\%APPVEYOR_PROJECT_NAME%.sln
 
 before_deploy:
  - if "%PLATFORM%" == "Win32" set ZipArch=Win32
  - if "%PLATFORM%" == "x64"   set ZipArch=Win64
- - del c:\projects\%APPVEYOR_PROJECT_NAME%\build\%CONFIGURATION%\CompilerIdCXX.exe
- - 7z a %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip c:\projects\%APPVEYOR_PROJECT_NAME%\build\%CONFIGURATION%\*.exe
+ - del %APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%\CompilerIdCXX.exe
+ - 7z a %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip %APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%\*.exe
  - appveyor PushArtifact %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip
 
 deploy:
