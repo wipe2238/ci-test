@@ -177,14 +177,17 @@ matrix:
 
 install:
  - cmake --version
+ - cmake -DCMAKELISTS=${TRAVIS_BUILD_DIR}/CMakeLists.txt -DCMDIR=/tmp/cmake -P cmake/CI/GetCMake.cmake
+ - export PATH=/tmp/cmake:$PATH
+ - cmake --version
 
-before_script:
- - if [[ "${TRAVIS_OS_NAME}" == "linux" && -f "${TRAVIS_BUILD_DIR}/CMakeLists.txt" ]]; then
-    cmake_ver=`cat ${TRAVIS_BUILD_DIR}/CMakeLists.txt | grep cmake_minimum_required | grep -oP '(?<=VERSION )\d+\.\d+\.\d+'`;
-    wget --no-check-certificate http://cmake.org/files/v${cmake_ver%.*}/cmake-${cmake_ver}-Linux-x86_64.sh -O /tmp/cmake.sh ;
-    sh /tmp/cmake.sh --prefix=$HOME --exclude-subdir ;
-    export PATH=$HOME/bin:$PATH ;
-   fi
+#before_script:
+# - if [[ "${TRAVIS_OS_NAME}" == "linux" && -f "${TRAVIS_BUILD_DIR}/CMakeLists.txt" ]]; then
+#    cmake_ver=`cat ${TRAVIS_BUILD_DIR}/CMakeLists.txt | grep cmake_minimum_required | grep -oP '(?<=VERSION )\d+\.\d+\.\d+'`;
+#    wget --no-check-certificate http://cmake.org/files/v${cmake_ver%.*}/cmake-${cmake_ver}-Linux-x86_64.sh -O /tmp/cmake.sh ;
+#    sh /tmp/cmake.sh --prefix=$HOME --exclude-subdir ;
+#    export PATH=$HOME/bin:$PATH ;
+#   fi
 
 script:
  - cd $TRAVIS_BUILD_DIR/build

@@ -24,31 +24,33 @@ matrix:
   - VisualStudioVersion: 10
 
 install:
+ - set
  - cmake --version
- - set CMAKE_VERS=3.4
- - set CMAKE_VERL=3.4.2
- - appveyor DownloadFile http://cmake.org/files/v%CMAKE_VERS%/cmake-%CMAKE_VERL%-win32-x86.zip -Filename C:\cmake.zip
- - 7z x C:\cmake.zip -oC:\cmake
+ - cd c:\projects\%APPVEYOR_PROJECT_NAME%
+ - cmake -DCI=APPVEYOR -DCMAKELISTS=CMakeLists.txt -DCMDIR=c:\cmake -P cmake\CI\GetCmake.cmake
+ - set PATH=C:\cmake\bin;%PATH%
+ - cmake --version
 
 before_build:
- - cd c:\projects\ci-test\build
+ - cd c:\projects\%APPVEYOR_PROJECT_NAME%
  - git submodule update --init --recursive
+ - cd build
  - if "%VisualStudioVersion%" == "14" set VSYear=2015
  - if "%VisualStudioVersion%" == "12" set VSYear=2013
  - if "%VisualStudioVersion%" == "11" set VSYear=2012
  - if "%VisualStudioVersion%" == "10" set VSYear=2010
  - if "%PLATFORM%" == "Win32" set VSArch=
  - if "%PLATFORM%" == "x64"   set VSArch= Win64
- - C:\cmake\cmake-%CMAKE_VERL%-win32-x86\bin\cmake.exe -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
+ - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
 
 build:
- project: c:\projects\ci-test\build\ci-test.sln
+ project: c:\projects\%APPVEYOR_PROJECT_NAME%\build\%APPVEYOR_PROJECT_NAME%.sln
 
 before_deploy:
  - if "%PLATFORM%" == "Win32" set ZipArch=Win32
  - if "%PLATFORM%" == "x64"   set ZipArch=Win64
- - del c:\projects\ci-test\build\%CONFIGURATION%\CompilerIdCXX.exe
- - 7z a %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip c:\projects\ci-test\build\%CONFIGURATION%\*.exe
+ - del c:\projects\%APPVEYOR_PROJECT_NAME%\build\%CONFIGURATION%\CompilerIdCXX.exe
+ - 7z a %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip c:\projects\%APPVEYOR_PROJECT_NAME%\build\%CONFIGURATION%\*.exe
  - appveyor PushArtifact %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip
 
 deploy:

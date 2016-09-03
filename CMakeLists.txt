@@ -48,4 +48,4 @@ mktest( vector_initializer )
 mktest( filesystem )
 lib_filesystem( filesystem )
 
-configure_file( ${PROJECT_SOURCE_DIR}/CMake.hpp.in ${PROJECT_SOURCE_DIR}/CMake.hpp NEWLINE_STYLE UNIX )
+configure_file( ${PROJECT_SOURCE_DIR}/cmake/CMake.hpp.in ${PROJECT_SOURCE_DIR}/CMake.hpp NEWLINE_STYLE UNIX )
