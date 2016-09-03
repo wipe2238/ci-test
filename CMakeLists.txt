@@ -2,6 +2,10 @@ cmake_minimum_required( VERSION 3.4.2 )
 message( STATUS "CMake ${CMAKE_VERSION}" )
 project( ci-test LANGUAGES CXX )
 
+	message( STATUS "CI       = $ENV{CI}" )
+	message( STATUS "APPVEYOR = $ENV{APPVEYOR}" )
+	message( STATUS "TRAVIS   = $ENV{TRAVIS}" )
+
 set( CMAKE_CXX_STANDARD 11 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
 
