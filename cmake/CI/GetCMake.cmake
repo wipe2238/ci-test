@@ -6,7 +6,7 @@ endif()
 
 if( $ENV{APPVEYOR} )
 	message( STATUS "Running on AppVeyor" )
-	set( CMFILE "C:\\cmake.zip" )
+	set( CMFILE "$ENV{TMP}\\cmake.zip" )
 #	set( CMFILE "/tmp/cmake.zip" )
 	set( CMSUFFIX "win32-x86.zip" )
 elseif( $ENV{TRAVIS} )

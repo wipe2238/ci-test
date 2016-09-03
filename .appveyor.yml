@@ -26,8 +26,7 @@ matrix:
 install:
  - set
  - cmake --version
- - cd %APPVEYOR_BUILD_FOLDER%
- - cmake -DCMAKELISTS=CMakeLists.txt -DCMDIR=c:\cmake -P cmake\CI\GetCMake.cmake
+ - cmake -DCMAKELISTS=%APPVEYOR_BUILD_FOLDER%\CMakeLists.txt -DCMDIR=c:\cmake -P cmake\CI\GetCMake.cmake
  - set PATH=C:\cmake\bin;%PATH%
  - cmake --version
 
@@ -44,7 +43,8 @@ before_build:
  - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
 
 build:
- project: %APPVEYOR_BUILD_FOLDER%\build\%APPVEYOR_PROJECT_NAME%.sln
+ project: build\ci-test.sln
+ parallel: true
 
 before_deploy:
  - if "%PLATFORM%" == "Win32" set ZipArch=Win32
@@ -54,16 +54,26 @@ before_deploy:
  - appveyor PushArtifact %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip
 
 deploy:
- provider: GitHub
- auth_token:
-  secure: 7kFFbQTFg2HbkTl0I7dwI/LZe5yiIJPm/99gWJKSepfzD2q7BLr2jUavaKeBgiiw
- tag: $(appveyor_repo_tag_name)
- release: '$(appveyor_project_name) v$(appveyor_repo_tag_name)'
- description: 'Automated build'
- draft: false
- prerelease: true
- on:
-  branch: master
-  appveyor_repo_tag: true
-  configuration: Release
-  VisualStudioVersion: 14
+ - provider: GitHub
+   auth_token:
+    secure: 7kFFbQTFg2HbkTl0I7dwI/LZe5yiIJPm/99gWJKSepfzD2q7BLr2jUavaKeBgiiw
+   tag: $(appveyor_repo_tag_name)
+   release: '$(appveyor_project_name) v$(appveyor_repo_tag_name)'
+   description: 'Automated build'
+   draft: false
+   prerelease: true
+   on:
+    branch: master
+    appveyor_repo_tag: true
+    configuration: Release
+    VisualStudioVersion: 14
+ - provider: ftp
+   protocol: sftp
+   host:
+    secure: K4EVPmbtVRC3ewwAfdcyyw==
+   username:
+    secure: SqXQ8BhujeefLYZ5Kziu+g==
+   password:
+    secure: C37iHG8LcwR2taFh6LaLwQ==
+   folder:
+    secure: bDLdByAHYC3nDAXMpLa46clNfKvIeCLOBJTqP/QWzBy1dodZ5Z+IdQCSgyvFLCUozUVb9E2j5S7bbQU4NRcJXhk9GnnWxcUVvGYBwsgJkow=

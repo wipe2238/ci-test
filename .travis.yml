@@ -178,7 +178,7 @@ matrix:
 install:
  - cmake --version
  - cmake -DCMAKELISTS=${TRAVIS_BUILD_DIR}/CMakeLists.txt -DCMDIR=/tmp/cmake -P cmake/CI/GetCMake.cmake
- - export PATH=/tmp/cmake:$PATH
+ - export PATH=/tmp/cmake/bin:$PATH
  - cmake --version
 
 #before_script:
