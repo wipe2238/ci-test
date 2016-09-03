@@ -24,11 +24,7 @@ matrix:
   - VisualStudioVersion: 10
 
 install:
- - set
- - cmake --version
- - cmake -DCMAKELISTS=%APPVEYOR_BUILD_FOLDER%\CMakeLists.txt -DCMDIR=c:\cmake -P cmake\CI\GetCMake.cmake
- - set PATH=C:\cmake\bin;%PATH%
- - cmake --version
+ - cmake -DCMAKELISTS=%APPVEYOR_BUILD_FOLDER%\CMakeLists.txt -DCMAKEDIR=c:\cmake -P cmake\CI\GetCMake.cmake && set PATH=C:\cmake\bin;%PATH%
 
 before_build:
  - cd %APPVEYOR_BUILD_FOLDER%
@@ -43,7 +39,7 @@ before_build:
  - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
 
 build:
- project: build\ci-test.sln
+ project: c:\projects\ci-test\build\ci-test.sln
  parallel: true
 
 before_deploy:
@@ -76,4 +72,4 @@ deploy:
    password:
     secure: C37iHG8LcwR2taFh6LaLwQ==
    folder:
-    secure: bDLdByAHYC3nDAXMpLa46clNfKvIeCLOBJTqP/QWzBy1dodZ5Z+IdQCSgyvFLCUozUVb9E2j5S7bbQU4NRcJXhk9GnnWxcUVvGYBwsgJkow=
+    secure: bDLdByAHYC3nDAXMpLa46clNfKvIeCLOBJTqP/QWzBy1dodZ5Z+IdQCSgyvFLCUonkuCpc+JW5UL+pzAZVD+IH7wf/3eOp9sIqezSoIjwTqQjzgx49fv2XKtcKUIb1/jznhlssV7pmfH+mgLr3QOEA==
