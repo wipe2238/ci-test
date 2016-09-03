@@ -72,4 +72,7 @@ deploy:
    password:
     secure: C37iHG8LcwR2taFh6LaLwQ==
    folder:
-    secure: bDLdByAHYC3nDAXMpLa46clNfKvIeCLOBJTqP/QWzBy1dodZ5Z+IdQCSgyvFLCUonkuCpc+JW5UL+pzAZVD+IH7wf/3eOp9sIqezSoIjwTqQjzgx49fv2XKtcKUIb1/jznhlssV7pmfH+mgLr3QOEA==
+    secure: mCdlELk2HrY87dCRw6QIig==
+   on:
+    configuration: Release
+    VisualStudioVersion: 14
