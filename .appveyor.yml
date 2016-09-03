@@ -46,8 +46,8 @@ before_deploy:
  - if "%PLATFORM%" == "Win32" set ZipArch=Win32
  - if "%PLATFORM%" == "x64"   set ZipArch=Win64
  - del %APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%\CompilerIdCXX.exe
- - 7z a %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip %APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%\*.exe
- - appveyor PushArtifact %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%ZipArch%.zip
+ - 7z a %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%CONFIGURATION%-%ZipArch%.zip %APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%\*.exe
+ - appveyor PushArtifact %APPVEYOR_PROJECT_NAME%-%APPVEYOR_REPO_TAG_NAME%-%CONFIGURATION%-%ZipArch%.zip
 
 deploy:
  - provider: GitHub
@@ -74,5 +74,4 @@ deploy:
    folder:
     secure: mCdlELk2HrY87dCRw6QIig==
    on:
-    configuration: Release
     VisualStudioVersion: 14
