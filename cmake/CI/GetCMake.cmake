@@ -23,12 +23,12 @@ elseif( NOT CMAKEDIR )
 	message( FATAL_ERROR "CMAKEDIR not set" )
 endif()
 
-message( STATUS "Installed CMake version -- v${CMAKE_VERSION}" )
+message( STATUS "Installed CMake -- v${CMAKE_VERSION}" )
 file( STRINGS ${CMAKELISTS} CMVERSION REGEX "^[\ \t]*cmake_minimum_required" )
 string( REGEX REPLACE ".*VERSION[ \t]+([0-9]+\\.[0-9]+).*" "\\1" CMVERS ${CMVERSION} )
 string( REGEX REPLACE ".*VERSION[ \t]+([0-9]+\\.[0-9]+\\.[0-9]+).*" "\\1" CMVERL ${CMVERSION} )
 
-if( CMAKE_VERSION VERSION_LOWER CMVERL )
+if( CMAKE_VERSION VERSION_LESS CMVERL )
 	message( STATUS "Downloading CMake -- v${CMVERL}" )
 	file( DOWNLOAD "http://cmake.org/files/v${CMVERS}/cmake-${CMVERL}-${CMSUFFIX}" ${CMFILE} )
 
