@@ -45,7 +45,7 @@ build:
 
 before_deploy:
  - set ZipTag=%APPVEYOR_REPO_TAG_NAME%
- - if "%APPVEYOR_REPO_TAG_NAME" == "" set ZipTag=%APPVEYOR_REPO_BRANCH%-%CONFIGURATION%
+ - if "%APPVEYOR_REPO_TAG_NAME%" == "" set ZipTag=%APPVEYOR_REPO_BRANCH%-%CONFIGURATION%
  - if "%PLATFORM%" == "Win32" set ZipArch=Win32
  - if "%PLATFORM%" == "x64"   set ZipArch=Win64
  - del %APPVEYOR_BUILD_FOLDER%\build\%CONFIGURATION%\CompilerIdCXX.exe
