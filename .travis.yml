@@ -176,12 +176,12 @@ matrix:
   - env: COMPILER=g++-4.8 BUILD=Release ARCH=64
 
 install:
- - cd $TRAVIS_BUILD_DIR
+ - cd ${TRAVIS_BUILD_DIR}
  - git submodule update --init --recursive
- - cmake -DCMAKELISTS=${TRAVIS_BUILD_DIR}/CMakeLists.txt -DCMAKEDIR=${HOME}/cmake -P cmake/CI/GetCMake.cmake && export PATH=${HOME}/cmake/bin:$PATH
+ - cmake -DCMAKELISTS=${TRAVIS_BUILD_DIR}/CMakeLists.txt -DCMAKEDIR=${HOME}/cmake -P cmake/CI/UpdateCMake.cmake && export PATH=${HOME}/cmake/bin:$PATH
 
 script:
- - cd $TRAVIS_BUILD_DIR/build
+ - cd ${TRAVIS_BUILD_DIR}/build
  - cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_CXX_FLAGS=-m${ARCH} ..
  - make
 
