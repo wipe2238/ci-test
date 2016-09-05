@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 3.4.2 )
+cmake_minimum_required( VERSION 3.4.3 )
 message( STATUS "CMake ${CMAKE_VERSION}" )
 project( ci-test LANGUAGES CXX )
 
