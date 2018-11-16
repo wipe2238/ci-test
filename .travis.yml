@@ -1,6 +1,7 @@
 os: linux
 sudo: required
-notifications: false
+notifications:
+ email: false
 
 git:
  depth: false
@@ -16,6 +17,7 @@ env:
 
 matrix:
  allow_failures:
+  - env: GXX=8
   - env: GXX=4.9
   - env: GXX=4.8
 
