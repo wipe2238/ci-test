@@ -1,11 +1,14 @@
 os: linux
 sudo: required
+notifications: false
 
 git:
  depth: false
 
 language: cpp
 env:
+ - GXX=8
+ - GXX=7
  - GXX=6
  - GXX=5
  - GXX=4.9
@@ -19,7 +22,8 @@ matrix:
 before_install:
  - export CC=gcc-${GXX} CXX=g++-${GXX} CMAKE_CXX_FLAGS=-m32
  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
- - sudo apt-get install ${CXX}-multilib
+ - sudo apt-get update
+ - sudo apt-get install -qq ${CXX}-multilib
 
 install:
  - cmake -DCMAKELISTS=${TRAVIS_BUILD_DIR}/CMakeLists.txt -DCMAKEDIR=${HOME}/cmake -P cmake/CI/UpdateCMake.cmake && export PATH=${HOME}/cmake/bin:$PATH
