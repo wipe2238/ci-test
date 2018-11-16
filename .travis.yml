@@ -1,16 +1,14 @@
 os: linux
 sudo: required
 
-language: cpp
-compiler: g++
+git:
+ depth: false
+
 env:
  - GXX=6
  - GXX=5
  - GXX=4.9
  - GXX=4.8
-
-git:
- depth: false
 
 matrix:
  allow_failures:
@@ -18,7 +16,7 @@ matrix:
   - env: GXX=4.8
 
 before_install:
- - export CXX=g++-${GXX}
+ - export CC=gcc-${GXX} CXX=g++-${GXX}
  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
  - sudo apt-get update
  - sudo apt-get install linux-libc-dev:i386 ${CXX}-multilib
