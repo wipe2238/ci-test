@@ -1,0 +1,205 @@
+language: cpp
+
+matrix:
+ include:
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-6 BUILD=Debug ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-6-multilib
+       - g++-6-multilib
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-6 BUILD=Debug ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-6
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-6 BUILD=Release ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-6-multilib
+       - g++-6-multilib
+       - p7zip-full
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-6 BUILD=Release ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-6
+       - p7zip-full
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-5 BUILD=Debug ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-5-multilib
+       - g++-5-multilib
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-5 BUILD=Debug ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-5
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-5 BUILD=Release ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-5-multilib
+       - g++-5-multilib
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-5 BUILD=Release ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-5
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-4.9 BUILD=Debug ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-4.9-multilib
+       - g++-4.9-multilib
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-4.9 BUILD=Debug ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-4.9
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-4.9 BUILD=Release ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-4.9-multilib
+       - g++-4.9-multilib
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-4.9 BUILD=Release ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-4.9
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-4.8 BUILD=Debug ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-4.8-multilib
+       - g++-4.8-multilib
+  - os: linux
+    compiler: g++
+    env: COMPILER=g++-4.8 BUILD=Debug ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-4.8
+  - os: linux
+    compiler: g++-4.8
+    env: COMPILER=g++-4.8 BUILD=Release ARCH=32
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - linux-libc-dev:i386
+       - gcc-4.8-multilib
+       - g++-4.8-multilib
+  - os: linux
+    compiler: g++-4.8
+    env: COMPILER=g++-4.8 BUILD=Release ARCH=64
+    addons:
+     apt:
+      sources:
+       - ubuntu-toolchain-r-test
+      packages:
+       - g++-4.8
+ ##
+ allow_failures:
+  - env: COMPILER=g++-4.9 BUILD=Debug ARCH=32
+  - env: COMPILER=g++-4.9 BUILD=Debug ARCH=64
+  - env: COMPILER=g++-4.9 BUILD=Release ARCH=32
+  - env: COMPILER=g++-4.9 BUILD=Release ARCH=64
+  - env: COMPILER=g++-4.8 BUILD=Debug ARCH=32
+  - env: COMPILER=g++-4.8 BUILD=Debug ARCH=64
+  - env: COMPILER=g++-4.8 BUILD=Release ARCH=32
+  - env: COMPILER=g++-4.8 BUILD=Release ARCH=64
+
+install:
+ - cd ${TRAVIS_BUILD_DIR}
+ - git submodule update --init --recursive
+ - cmake -DCMAKELISTS=${TRAVIS_BUILD_DIR}/CMakeLists.txt -DCMAKEDIR=${HOME}/cmake -P cmake/CI/UpdateCMake.cmake && export PATH=${HOME}/cmake/bin:$PATH
+
+script:
+ - cd ${TRAVIS_BUILD_DIR}/build
+ - cmake -DCMAKE_BUILD_TYPE=${BUILD} -DCMAKE_CXX_COMPILER=${COMPILER} -DCMAKE_CXX_FLAGS=-m${ARCH} ..
+ - make
+
+before_deploy:
+ - cd $TRAVIS_BUILD_DIR/build
+ - 7z a /tmp/${TRAVIS_REPO_SLUG##*/}-${TRAVIS_TAG}-Linux${ARCH}.zip class_initializer for_auto for_lambda vector_initializer
+
+deploy:
+ provider: releases
+ api_key:
+  secure: "BXB3KTknuom4G+uLBxEDi+14uMD5cDbuPZzGUqBvQc6Pf/RiVGMj/AN3AFxJuDc9U7QZMRSA2KqkMCjWzCESK3Rb8sgSJLXoa2YvGDfJCRQ7rQJf7xXxa/PSOtpe0pdH7vUvCKnMdS0Muq9nEcxnm/fa0W63s/xdY7NmVN/a3VgRyPt/PVMjnPN3/p3DLArSpHZ3dyZxC1O35AD2xAzUz1bJZWpQlj8ElwbE923I7spWC9/jvr0yZKQqJpyBuyzOnVyHoQyw5oUn0/x7yLTwgcTPY/T35to3xw8JXixyl1qB1WScDh5mYn6XWULWr5bTLhepD3AUJCuD32ki4wJo1nZZe+rN17Ojw338O1eKZRowAMP1uo7RZTOPLglDlohKm3JWXyzFB+8pxmnhWpfQPuzty+sx3RdIDRZznvDZC2lSVvMpKi6T7ZKRTaxfUV/QyHg7c1Bwgua5+1R14wwb7gddZrUZdMjwtp4/MmP+9r2UF3BJApVzXiGef4GPK3vsYNc+FzJitObvsVr1KGqeLGlmQ0rS3zHl3i2PDOoMm/gcOpnOSOFGisBZkLqjUPhcKB1JUE2rn7zmYXx8l3Pi3O7p4VrZfmQPFWRRpznxHzuZJ9MHomFVP9lAJAOTdgZdzgtqlsG7CDTJkRrQW6Pl2sr/NQwl/ZiZOONh1oLm0hk="
+ file: /tmp/${TRAVIS_REPO_SLUG##*/}-${TRAVIS_TAG}-Linux${ARCH}.zip
+ name: ${TRAVIS_REPO_SLUG##*/} v${TRAVIS_TAG}
+ body: Automated build
+ draft: false
+ prerelease: true
+ skip_cleanup: true
+ on:
+  branch: master
+  tags: true
+  condition: $BUILD == Release && $COMPILER == g++-6
