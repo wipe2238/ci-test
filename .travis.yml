@@ -4,6 +4,7 @@ sudo: required
 git:
  depth: false
 
+language: cpp
 env:
  - GXX=6
  - GXX=5
@@ -18,7 +19,6 @@ matrix:
 before_install:
  - export CC=gcc-${GXX} CXX=g++-${GXX} CMAKE_CXX_FLAGS=-m32
  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
- - sudo apt-get update
  - sudo apt-get install ${CXX}-multilib
 
 install:
