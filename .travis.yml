@@ -2,23 +2,25 @@ os: linux
 sudo: required
 
 language: cpp
+compiler: g++
 env:
- - CXX=g++-4.9
- - CXX=g++-4.8
+ - GXX=g++-4.9
+ - GXX=g++-4.8
 
 git:
  depth: false
 
 matrix:
  allow_failures:
-  - env: CXX=g++-4.9
-  - env: CXX=g++-4.8
+  - env: GXX=g++-4.9
+  - env: GXX=g++-4.8
 
 before_install:
+ - export CXX=${GXX}
  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
  - sudo apt-get update
  - set | grep TRAVIS
- - sudo apt-get install linux-libc-dev:i386 ${CXX}-multilib
+ - sudo apt-get install linux-libc-dev:i386 ${GXX}-multilib
 
 install:
  - cmake -DCMAKELISTS=${TRAVIS_BUILD_DIR}/CMakeLists.txt -DCMAKEDIR=${HOME}/cmake -P cmake/CI/UpdateCMake.cmake && export PATH=${HOME}/cmake/bin:$PATH
