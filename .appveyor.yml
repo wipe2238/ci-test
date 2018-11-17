@@ -16,6 +16,11 @@ configuration:
  - Release
 
 clone_depth: 50
+clone_folder: C:\ci-test
+clone_script:
+ - git clone --branch=%APPVEYOR_REPO_BRANCH% https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+ - git checkout -qf %APPVEYOR_REPO_COMMIT%
+ - git submodule update --init --recursive
 
 matrix:
  allow_failures:
@@ -24,9 +29,6 @@ matrix:
   - VisualStudioVersion: 10
 
 install:
- - cd %APPVEYOR_BUILD_FOLDER%
- - git submodule update --init --recursive
- - set
  - cmake -DCMAKELISTS=%APPVEYOR_BUILD_FOLDER%\CMakeLists.txt -DCMAKEDIR=c:\cmake -P cmake\CI\UpdateCMake.cmake && set PATH=C:\cmake\bin;%PATH%
 
 before_build:
@@ -39,9 +41,8 @@ before_build:
  - if "%PLATFORM%" == "x64"   set VSArch= Win64
  - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
 
-build:
- project: c:\projects\ci-test\build\ci-test.sln
- parallel: true
+build_script:
+ - cmake --build .
 
 before_deploy:
  - set ZipTag=%APPVEYOR_REPO_TAG_NAME%
