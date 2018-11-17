@@ -8,7 +8,7 @@ environment:
   - VisualStudioVersion: 10
 
 platform:
- - x86
+ - x32
  - x64
 
 configuration:
@@ -36,12 +36,12 @@ before_build:
  - if "%VisualStudioVersion%" == "12" set VSYear=2013
  - if "%VisualStudioVersion%" == "11" set VSYear=2012
  - if "%VisualStudioVersion%" == "10" set VSYear=2010
- - if "%PLATFORM%" == "x86" set VSArch=
- - if "%PLATFORM%" == "x64"   set VSArch= Win64
- - cmake -DCMAKE_BUILD_TYPE=%configuration% -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
+ - if "%PLATFORM%" == "x32" set VSArch=
+ - if "%PLATFORM%" == "x64" set VSArch= Win64
+ - cmake -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
 
 build_script:
- - cmake --build .
+ - cmake --build . --config %configuration%
 
 before_deploy:
  - set ZipTag=%APPVEYOR_REPO_TAG_NAME%
@@ -78,4 +78,4 @@ deploy:
    folder:
     secure: mCdlELk2HrY87dCRw6QIig==
    on:
-    VisualStudioVersion: 14
+    VisualStudioVersion: 1
