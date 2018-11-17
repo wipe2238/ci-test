@@ -26,7 +26,6 @@ before_install:
  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
  - sudo apt-get update
  - sudo apt-get install -qq ${CC}-multilib ${CXX}-multilib
- - mkdir /test1 && echo YAY1
  - sudo mkdir /test2 && echo YAY2
 
 install:
