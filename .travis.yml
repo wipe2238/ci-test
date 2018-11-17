@@ -25,7 +25,9 @@ before_install:
  - export CC=gcc-${GXX} CXX=g++-${GXX} CMAKE_CXX_FLAGS=-m32
  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
  - sudo apt-get update
- - sudo apt-get install -qq ${CXX}-multilib
+ - sudo apt-get install -qq ${CC}-multilib ${CXX}-multilib
+ - mkdir /test1 && echo YAY1
+ - sudo mkdir /test2 && echo YAY2
 
 install:
  - cmake -DCMAKELISTS=${TRAVIS_BUILD_DIR}/CMakeLists.txt -DCMAKEDIR=${HOME}/cmake -P cmake/CI/UpdateCMake.cmake && export PATH=${HOME}/cmake/bin:$PATH
