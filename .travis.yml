@@ -5,6 +5,8 @@ notifications:
 
 git:
  depth: false
+ checkout:
+  - git clone
 
 language: cpp
 env:
