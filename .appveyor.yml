@@ -18,7 +18,7 @@ configuration:
 clone_depth: 50
 clone_folder: C:\ci-test
 clone_script:
- - git clone --quiet --branch=%APPVEYOR_REPO_BRANCH% --recurse-submodules git@github.com:%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+ - git clone --quiet --branch=%APPVEYOR_REPO_BRANCH% --recurse-submodules https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
  - git checkout --quiet --force %APPVEYOR_REPO_COMMIT%
 
 matrix:
