@@ -44,7 +44,7 @@ mktest( for_auto )
 mktest( for_lambda )
 mktest( vector_initializer )
 
-mktest( filesystem )
-lib_filesystem( filesystem )
+#mktest( filesystem )
+#lib_filesystem( filesystem )
 
 configure_file( ${PROJECT_SOURCE_DIR}/cmake/CMake.hpp.in ${PROJECT_SOURCE_DIR}/source/CMake.hpp NEWLINE_STYLE UNIX )
