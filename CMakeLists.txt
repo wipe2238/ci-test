@@ -29,7 +29,7 @@ function( lib_filesystem target )
 endfunction()
 
 macro( mktest target )
-	add_executable( ${target} ${target}.cpp)
+	add_executable( ${target} source/${target}.cpp)
 
 	if( NOT CMAKE_BUILD_TYPE STREQUAL "Debug" )
 		target_compile_definitions( ${target} PRIVATE -DNDEBUG )
@@ -44,4 +44,4 @@ mktest( vector_initializer )
 mktest( filesystem )
 lib_filesystem( filesystem )
 
-configure_file( ${PROJECT_SOURCE_DIR}/cmake/CMake.hpp.in ${PROJECT_SOURCE_DIR}/CMake.hpp NEWLINE_STYLE UNIX )
+configure_file( ${PROJECT_SOURCE_DIR}/cmake/CMake.hpp.in ${PROJECT_SOURCE_DIR}/source/CMake.hpp NEWLINE_STYLE UNIX )

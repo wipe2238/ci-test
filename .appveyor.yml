@@ -1,11 +1,9 @@
 version: "{build}"
 
-environment:
- matrix:
-  - VisualStudioVersion: 14
-  - VisualStudioVersion: 12
-  - VisualStudioVersion: 11
-  - VisualStudioVersion: 10
+image:
+ - Visual Studio 2013
+ - Visual Studio 2015
+ - Visual Studio 2017
 
 platform:
  - x32
@@ -16,22 +14,14 @@ configuration:
  - Release
 
 cache:
- - C:\ci-test\cache
-
-matrix:
- allow_failures:
-  - VisualStudioVersion: 12
-  - VisualStudioVersion: 11
-  - VisualStudioVersion: 10
+ - C:\ci-test\cache -> CMakeLists.txt CMakeBuild.cmake
 
 clone_folder: C:\ci-test
-clone_script:
- - git clone --quiet --branch=%APPVEYOR_REPO_BRANCH% --recurse-submodules https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
- - git checkout --quiet --force %APPVEYOR_REPO_COMMIT%
 
 install:
+ - git submodule update --init --recursive
  - cmd: set PATH=cache;%PATH%
- - cmake -DOWNLOAD_DIR=cache -P cmake/SelfUpdate/SelfUpdate.cmake
+ - cmake -DO=CMakeBuild.cmake -DOWNLOAD_DIR=cache -P cmake/SelfUpdate/SelfUpdate.cmake
 
 before_build:
  - cd %APPVEYOR_BUILD_FOLDER%\build
