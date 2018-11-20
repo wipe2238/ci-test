@@ -17,9 +17,9 @@ env:
  - GXX=7
  - GXX=8
 
-matrix:
- allow_failures:
-  - env: GXX=8
+#matrix:
+# allow_failures:
+#  - env: GXX=8
 
 cache:
  directories:
