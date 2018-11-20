@@ -22,13 +22,14 @@ for:
      - image: Visual Studio 2013
      - image: Visual Studio 2015
      - image: Visual Studio 2017
-    clone_folder: C:\ci-test
+   clone_folder: C:\ci-test
  - matrix:
     only:
      - image: Ubuntu
      - image: Ubuntu1604
      - image: Ubuntu1804
-    clone_folder: /ci-test
+   clone_folder: /ci-test
+
 
 cache: cache -> CMakeLists.txt CMakeBuild.cmake
 
