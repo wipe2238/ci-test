@@ -39,6 +39,7 @@ macro( mktest target )
 	endif()
 endmacro()
 
+mktest( arch )
 mktest( class_initializer )
 mktest( for_auto )
 mktest( for_lambda )
