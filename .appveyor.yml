@@ -15,11 +15,8 @@ configuration:
  - Debug
  - Release
 
-clone_depth: 50
-clone_folder: C:\ci-test
-clone_script:
- - git clone --quiet --branch=%APPVEYOR_REPO_BRANCH% --recurse-submodules https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
- - git checkout --quiet --force %APPVEYOR_REPO_COMMIT%
+cache:
+ - C:\ci-test\cache
 
 matrix:
  allow_failures:
@@ -27,8 +24,14 @@ matrix:
   - VisualStudioVersion: 11
   - VisualStudioVersion: 10
 
+clone_folder: C:\ci-test
+clone_script:
+ - git clone --quiet --branch=%APPVEYOR_REPO_BRANCH% --recurse-submodules https://github.com/%APPVEYOR_REPO_NAME%.git %APPVEYOR_BUILD_FOLDER%
+ - git checkout --quiet --force %APPVEYOR_REPO_COMMIT%
+
 install:
- - cmake -DCMAKELISTS=%APPVEYOR_BUILD_FOLDER%\CMakeLists.txt -DCMAKEDIR=c:\cmake -P cmake\CI\UpdateCMake.cmake && set PATH=C:\cmake\bin;%PATH%
+ - cmd: set PATH=cache;%PATH%
+ - cmake -DOWNLOAD_DIR=cache -P cmake/SelfUpdate/SelfUpdate.cmake
 
 before_build:
  - cd %APPVEYOR_BUILD_FOLDER%\build
