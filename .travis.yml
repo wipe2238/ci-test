@@ -28,10 +28,8 @@ before_install:
  - sudo apt-get install -qq ${CC}-multilib ${CXX}-multilib
 
 install:
- - PATH=cache:$PATH
+ - PATH=cache/cmake/bin:$PATH
  - cmake -DO=CMakeBuild.cmake -DOWNLOAD_DIR=cache -P cmake/SelfUpdate.cmake && hash -r
 
 script:
- - cd ${TRAVIS_BUILD_DIR}/build
- - cmake ..
- - make
+ - cmake -P CMakeBuild.cmake
