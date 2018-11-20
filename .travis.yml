@@ -33,7 +33,7 @@ before_install:
 
 install:
  - PATH=cache/cmake/bin:$PATH
- - cmake -DO=CMakeBuild.cmake -DOWNLOAD_DIR=cache -P cmake/SelfUpdate/SelfUpdate.cmake && hash -r
+ - cmake -DO=CMakeBuild.cmake -DOWNLOAD_DIR=cache -P CMake/SelfUpdate/SelfUpdate.cmake && hash -r
 
 script:
  - cmake -P CMakeBuild.cmake

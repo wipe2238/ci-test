@@ -33,9 +33,12 @@ cache: cache -> CMakeLists.txt CMakeBuild.cmake
 
 install:
  - git submodule update --init --recursive
+ - sh: sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+ - sh: sudo apt-get update
+ - sh: sudo apt-get install -qq gcc-multilib g++-multilib
  - sh: PATH=cache/cmake/bin:$PATH
  - cmd: set PATH=cache\cmake\bin;%PATH%
- - cmake -DO=CMakeBuild.cmake -DOWNLOAD_DIR=cache -P cmake/SelfUpdate/SelfUpdate.cmake
+ - cmake -DO=CMakeBuild.cmake -DOWNLOAD_DIR=cache -P CMake/SelfUpdate/SelfUpdate.cmake
  - sh: hash -r
 
 build_script:

@@ -1,4 +1,4 @@
 [submodule "SelfUpdate"]
 	url = https://gist.github.com/4ceef850f7635180508598ab51080055.git
 	branch = master
-	path = cmake/SelfUpdate
+	path = CMake/SelfUpdate
