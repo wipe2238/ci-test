@@ -12,6 +12,12 @@ if( DEFINED ENV{CI} )
 			message( FATAL_ERROR "Unknown platform : $ENV{PLATFORM}" )
 		endif()
 
+		if( DEFINED ENV{CONFIGURATION} )
+			set( CI_CONFIGURATION "$ENV{CONFIGURATION}" )
+		else()
+			message( FATAL_ERROR "Unknown configuration" )
+		endif()
+
 		if( "$ENV{APPVEYOR_BUILD_WORKER_IMAGE}" STREQUAL "Visual Studio 2013" )
 			set( CI_GENERATOR "Visual Studio 12 2013${CI_GENERATOR_SUFFIX}" )
 		elseif( "$ENV{APPVEYOR_BUILD_WORKER_IMAGE}" STREQUAL "Visual Studio 2015" )
@@ -37,7 +43,22 @@ message( STATUS "${CI_GENERATOR}" )
 
 file( REMOVE_RECURSE build )
 file( MAKE_DIRECTORY build )
+
+unset( result )
 execute_process(
 	COMMAND ${CMAKE_COMMAND} -G "${CI_GENERATOR}" "${CMAKE_CURRENT_LIST_DIR}"
 	WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/build
+	RESULT_VARIABLE result
 )
+if( NOT result EQUAL 0 )
+	message( FATAL_ERROR "Generator error" )
+endif()
+
+unset( result )
+execute_process(
+	COMMAND ${CMAKE_COMMAND} --build build --config ${CI_CONFIGURATION}
+	RESULT_VARIABLE result
+)
+if( NOT result EQUAL 0 )
+	message( FATAL_ERROR "Build error" )
+endif()

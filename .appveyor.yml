@@ -20,8 +20,10 @@ clone_folder: C:\ci-test
 
 install:
  - git submodule update --init --recursive
+ - sh: PATH=cache/cmake/bin:$PATH
  - cmd: set PATH=cache\cmake\bin;%PATH%
  - cmake -DO=CMakeBuild.cmake -DOWNLOAD_DIR=cache -P cmake/SelfUpdate/SelfUpdate.cmake
+ - sh: hash -r
 
 build_script:
  - cmake -P CMakeBuild.cmake

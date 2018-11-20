@@ -21,6 +21,11 @@ matrix:
  allow_failures:
   - env: GXX=8
 
+cache:
+ apt: true
+ directories:
+  - cache
+
 before_install:
  - export CC=gcc-${GXX} CXX=g++-${GXX}
  - sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
@@ -29,7 +34,7 @@ before_install:
 
 install:
  - PATH=cache/cmake/bin:$PATH
- - cmake -DO=CMakeBuild.cmake -DOWNLOAD_DIR=cache -P cmake/SelfUpdate.cmake && hash -r
+ - cmake -DO=CMakeBuild.cmake -DOWNLOAD_DIR=cache -P cmake/SelfUpdate/SelfUpdate.cmake && hash -r
 
 script:
  - cmake -P CMakeBuild.cmake
