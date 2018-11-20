@@ -1,12 +1,12 @@
 version: "{build}"
 
+#- Visual Studio 2013
+#- Visual Studio 2015
 image:
- - Visual Studio 2013
- - Visual Studio 2015
- - Visual Studio 2017
  - Ubuntu
  - Ubuntu1604
  - Ubuntu1804
+ - Visual Studio 2017
 
 platform:
  - x32
@@ -16,10 +16,21 @@ configuration:
  - Debug
  - Release
 
-cache:
- - C:\ci-test\cache -> CMakeLists.txt CMakeBuild.cmake
+for:
+ - matrix:
+    only:
+     - image: Visual Studio 2013
+     - image: Visual Studio 2015
+     - image: Visual Studio 2017
+    clone_folder: C:\ci-test
+ - matrix:
+    only:
+     - image: Ubuntu
+     - image: Ubuntu1604
+     - image: Ubuntu1804
+    clone_folder: /ci-test
 
-clone_folder: C:\ci-test
+cache: cache -> CMakeLists.txt CMakeBuild.cmake
 
 install:
  - git submodule update --init --recursive
