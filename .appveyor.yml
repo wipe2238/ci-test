@@ -3,7 +3,6 @@ version: "{build}"
 #- Visual Studio 2013
 #- Visual Studio 2015
 image:
- - Ubuntu
  - Ubuntu1604
  - Ubuntu1804
  - Visual Studio 2017
@@ -29,7 +28,6 @@ for:
      - image: Ubuntu1604
      - image: Ubuntu1804
    clone_folder: /ci-test
-
 
 cache: cache -> CMakeLists.txt CMakeBuild.cmake
 
