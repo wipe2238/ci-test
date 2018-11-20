@@ -22,7 +22,6 @@ matrix:
   - env: GXX=8
 
 cache:
- apt: true
  directories:
   - cache
 

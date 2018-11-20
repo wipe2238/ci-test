@@ -1,5 +1,4 @@
 cmake_minimum_required( VERSION 3.4.3 )
-message( STATUS "CMake ${CMAKE_VERSION}" )
 project( ci-test LANGUAGES CXX )
 
 set( CMAKE_CXX_STANDARD 11 )
@@ -18,8 +17,12 @@ function( lib_filesystem target )
 
 	set( CMAKE_REQUIRED_FLAGS "${CMAKE_REQUIRED_FLAGS_OLD}" )
 
-	if( HAVE_EXPERIMENTAL_FILESYSTEM )
-		target_link_libraries( ${target} stdc++fs )
+	if( HAVE_FILESYSTEM OR HAVE_EXPERIMENTAL_FILESYSTEM )
+		find_library( HAVE_LIB_STDCXX_FS stdc++fs )
+		message( STATUS "HAVE_LIB_STDCXX_FS = ${HAVE_LIB_STDCXX_FS}" )
+		if( HAVE_LIB_STDCXX_FS )
+			target_link_libraries( ${target} stdc++fs )
+		endif()
 	endif()
 
 	if( NOT HAVE_FILESYSTEM AND NOT HAVE_EXPERIMENTAL_FILESYSTEM )
