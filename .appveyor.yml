@@ -1,13 +1,25 @@
 version: "{build}"
 
+image:
+ - Visual Studio 2019
+ - Visual Studio 2017
+ - Visual Studio 2015
+ - Visual Studio 2013
+
 environment:
  matrix:
-  - VisualStudioVersion: 16
-  - VisualStudioVersion: 15
-  - VisualStudioVersion: 14
-  - VisualStudioVersion: 12
-  - VisualStudioVersion: 11
-  - VisualStudioVersion: 10
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+    VsYear: 2019
+    VSVer:  16
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    VsYear: 2017
+    VSVer:  15
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+    VsYear: 2015
+    VSVer:  14
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
+    VsYear: 2013
+    VSVer:  12
 
 platform:
  - x32
@@ -22,9 +34,8 @@ cache:
 
 matrix:
  allow_failures:
-  - VisualStudioVersion: 12
-  - VisualStudioVersion: 11
-  - VisualStudioVersion: 10
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
 
 clone_folder: C:\ci-test
 clone_script:
@@ -37,15 +48,15 @@ install:
 
 before_build:
  - cd %APPVEYOR_BUILD_FOLDER%\build
- - if "%VisualStudioVersion%" == "16" set VSYear=2019
- - if "%VisualStudioVersion%" == "15" set VSYear=2017
- - if "%VisualStudioVersion%" == "14" set VSYear=2015
- - if "%VisualStudioVersion%" == "12" set VSYear=2013
- - if "%VisualStudioVersion%" == "11" set VSYear=2012
- - if "%VisualStudioVersion%" == "10" set VSYear=2010
+#- if "%VisualStudioVersion%" == "16" set VSYear=2019
+#- if "%VisualStudioVersion%" == "15" set VSYear=2017
+#- if "%VisualStudioVersion%" == "14" set VSYear=2015
+#- if "%VisualStudioVersion%" == "12" set VSYear=2013
+#- if "%VisualStudioVersion%" == "11" set VSYear=2012
+#- if "%VisualStudioVersion%" == "10" set VSYear=2010
  - if "%PLATFORM%" == "x32" set VSArch=
  - if "%PLATFORM%" == "x64" set VSArch= Win64
- - cmake -G "Visual Studio %VisualStudioVersion% %VSYear%%VSArch%" ..
+ - cmake -G "Visual Studio %VSVer% %VSYear%%VSArch%" ..
 
 build_script:
  - cmake --build . --config %configuration%
