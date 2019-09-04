@@ -2,6 +2,8 @@ version: "{build}"
 
 environment:
  matrix:
+  - VisualStudioVersion: 16
+  - VisualStudioVersion: 15
   - VisualStudioVersion: 14
   - VisualStudioVersion: 12
   - VisualStudioVersion: 11
@@ -35,6 +37,8 @@ install:
 
 before_build:
  - cd %APPVEYOR_BUILD_FOLDER%\build
+ - if "%VisualStudioVersion%" == "16" set VSYear=2019
+ - if "%VisualStudioVersion%" == "15" set VSYear=2017
  - if "%VisualStudioVersion%" == "14" set VSYear=2015
  - if "%VisualStudioVersion%" == "12" set VSYear=2013
  - if "%VisualStudioVersion%" == "11" set VSYear=2012
