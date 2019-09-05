@@ -5,8 +5,14 @@
 
 #if defined(HAVE_FILESYSTEM)
  #include <filesystem>
- #if _MSC_VER == 1900 || _MSC_VER == 1800 || _MSC_VER == 1700
-  namespace fs = std::tr2::sys;
+ #if defined(_MSC_VER) && _MSC_VER >= 1700
+  #if _MSC_VER >= 1914 && _MSVC_LANG >= 201703L
+   namespace fs = std::filesystem;
+  #elif _MSC_VER >= 1910
+   namespace fs = std::experimental::filesystem;
+  #else
+   namespace fs = std::tr2::sys;
+  #endif
  #else
   namespace fs = std::filesystem;
  #endif
